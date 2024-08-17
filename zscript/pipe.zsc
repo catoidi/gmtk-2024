@@ -1,12 +1,60 @@
 //zscript/pipe.zsc
 
-Class Cube : Actor
+Class Pipe : Actor
 {
+	//straight line pipe
+	
 	Default
 	{
+		Health 30;
 		Radius 32;
 		Height 64;
 		+SOLID;
+		+SHOOTABLE;
+		+NOBLOOD;
+		+NOGRAVITY;
+	}
+	
+	Pipe End1, End2;
+	int liquid;
+	
+	override void tick()
+	{
+		Super.Tick();
+		PipeTick();
+	}
+	
+	virtual void PipeTick()
+	{
+	
+		liquid = 0;
+		double extraX = Pos.X % 64;
+		double extraY = Pos.Y % 64;
+		double extraZ = (Pos.Z + 8) % 64;
+		FLineTraceData side1, side2, collide;
+		
+		//collision check
+		LineTrace(0, 8, 0, 0, height / 2, 0, 0, collide);
+		if (collide.HitActor is "Pipe")
+		{
+			SetOrigin((Pos.X, Pos.Y, Pos.Z + 64), false);
+		}
+		
+		//front
+		LineTrace(angle, 64, pitch, 0, height / 2, 0, 0, side1);
+		if (side1.HitActor is "Pipe") 
+		{
+			End1 = Pipe(side1.HitActor);
+			if (End1.liquid > 0) {liquid += 1;}
+		}
+		//back
+		LineTrace(angle + 180, 64, pitch, 0, height / 2, 0, 0, side2);
+		if (side2.HitActor is "Pipe") 
+		{
+			End2 = Pipe(side2.HitActor);
+			if (End2.liquid > 0) {liquid += 2;}
+		}
+		SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
 	}
 	
 	States
@@ -14,5 +62,34 @@ Class Cube : Actor
 		Spawn:
 			PLAY A -1;
 			Stop;
+	}
+}
+
+Class PipePump : Pipe
+{
+	override void PipeTick()
+	{
+		liquid = 0;
+		
+		double extraX = Pos.X % 64;
+		double extraY = Pos.Y % 64;
+		double extraZ = (Pos.Z + 8) % 64;
+		SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+	
+		FLineTraceData side1, side2;
+		//front
+		LineTrace(angle, 64, pitch, 0, height / 2, 0, 0, side1);
+		if (side1.HitActor is "Pipe") 
+		{
+			End1 = Pipe(side1.HitActor);
+			if (End1.liquid > 0) {liquid += 1;}
+		}
+		//back
+		LineTrace(angle + 180, 64, pitch, 0, height / 2, 0, 0, side2);
+		if (side2.HitActor is "Pipe") 
+		{
+			End2 = Pipe(side2.HitActor);
+			if (End2.liquid > 0) {liquid += 2;}
+		}
 	}
 }

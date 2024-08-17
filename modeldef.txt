@@ -1,6 +1,6 @@
 //modeldef.txt
 
-Model Cube
+Model Pipe
 {
 	Path "models/"
 	Model 0 "cube.obj"
