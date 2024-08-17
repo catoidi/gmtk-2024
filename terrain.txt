@@ -1,0 +1,10 @@
+//terrain.txt
+
+//water
+terrain	boxwater
+{
+	footclip	 6
+	liquid
+}
+
+floor WATER boxwater

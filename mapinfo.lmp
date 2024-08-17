@@ -37,9 +37,18 @@ Map "MAP01" "$TXT_MAP01"
 	LightMode = 3
 	Sky1 = "textures/sky1.png"
 	Gravity = 300
+	OutsideFog = "e000b6"
+	OutsideFogDensity = 8
+}
+
+Map "TITLEMAP" "Title"
+{
+	LightMode = 3
+	Sky1 = "textures/sky1.png"
 }
 
 DoomEdNums
 {
 	23000 = Ore
+	23001 = FuelSmoke
 }

@@ -1,10 +1,10 @@
 IWAD
 {
-	Name = "My Standalone Game"
+	Name = "Exoplanetary Pitstop"
 	BannerColors = "dea840", "003d59"
-	Autoname = "MyStandaloneGame"
+	Autoname = "ExoplanetaryPitstop"
 	Game = "Doom"
-	Config = "MyStandaloneGame"
-	IWADName = "MyStandaloneGame.ipk3"
+	Config = "ExoplanetaryPitstop"
+	IWADName = "exoplanetary-pitstop.ipk3"
 	Mapinfo = "mapinfo/mindefaults.txt"
 }

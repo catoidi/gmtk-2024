@@ -1,0 +1,26 @@
+//zscript/drill.zsc
+
+Class OreDrill : Weapon
+{
+	Default
+	{
+		Weapon.WeaponScaleY 1.0;
+	}
+
+	States
+	{	
+		Select:
+			DRIL A 1 A_Raise;
+			Loop;
+		Deselect:
+			DRIL A 1 A_Lower;
+			Loop;
+		Ready:
+			DRIL A 1 A_WeaponReady();
+			Loop;
+		Fire:
+			DRIL ABCD 1;
+			#### # 0 A_Refire();
+			Goto Ready;
+	}
+}
