@@ -8,7 +8,7 @@ class MyStandaloneGameHUD : BaseStatusBar
 		Super.Init();
 		SetSize(0, 320, 200);
 		Font fnt = SmallFont;
-		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
+		mHUDFont = HUDFont.Create(fnt, 0, Mono_Off, 1, 1);
 	}
 
 	override void Draw(int state, double TicFrac)

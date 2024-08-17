@@ -1,0 +1,6 @@
+pointlight BULLETSPARK
+{
+	color 0.97 0.9 0.24
+	size 10
+	offset 0 0 0
+}

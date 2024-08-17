@@ -19,8 +19,37 @@ Class OreDrill : Weapon
 			DRIL A 1 A_WeaponReady();
 			Loop;
 		Fire:
+			#### # 0 A_CustomPunch(1, true, CPF_PULLIN, "Drill_Puff");
 			DRIL ABCD 1;
 			#### # 0 A_Refire();
 			Goto Ready;
+	}
+}
+
+Class Drill_Puff : Actor
+{
+	Default
+	{
+		+NOBLOCKMAP;
+		+NOGRAVITY;
+		+ALLOWPARTICLES;
+		+RANDOMIZE;
+		+FORCEXYBILLBOARD;
+		RenderStyle "Translucent";
+		Alpha 0.5;
+		Mass 5;
+	}
+	
+	States
+	{
+		Spawn:
+			PUFF BBB 0 NoDelay A_SpawnParticle("f8e63d", SPF_FULLBRIGHT | SPF_RELVEL, 24, 2, random(0, 359), 0, 0, 0, random(0, 4), 0, random(0, 4), 0, 0, -0.33);
+			PUFF B 2 A_AttachLightDef("spark", "BULLETSPARK");
+			PUFF B 2 A_RemoveLight("spark");
+			Goto Looper+1;
+		Looper:
+			PUFF B 4;
+			PUFF C 4 A_Fadeout(0.1);
+			Loop;
 	}
 }

@@ -4,11 +4,13 @@ Class Ore : Actor
 {
 	Default
 	{
-		Health 30;
+		Health 8;
 		Radius 32;
 		Height 64;
+		Mass 0x7FFFFFFF;
 		+SHOOTABLE;
 		+SOLID;
+		+NOBLOOD;
 	}
 	
 	States

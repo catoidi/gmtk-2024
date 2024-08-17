@@ -19,6 +19,19 @@ GameInfo
 	StatusbarClass = "MyStandaloneGameHUD"
 }
 
+GameDefaults
+{
+	//doom's default pixelratio is 1.2, making the world look 20% taller.
+	PixelRatio = 1
+	NoIntermission
+	LightMode = 3
+	EnableShadowmap
+	UsePlayerStartZ
+	NoCrouch
+	CheckSwitchRange
+}
+
+
 ClearEpisodes
 Episode map01
 {
@@ -34,7 +47,6 @@ Skill normal
 
 Map "MAP01" "$TXT_MAP01"
 {
-	LightMode = 3
 	Sky1 = "textures/sky1.png"
 	Gravity = 300
 	//OutsideFog = "e000b6"
@@ -43,7 +55,6 @@ Map "MAP01" "$TXT_MAP01"
 
 Map "TITLEMAP" "Title"
 {
-	LightMode = 3
 	Sky1 = "textures/sky1.png"
 }
 
