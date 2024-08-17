@@ -1,0 +1,12 @@
+//modeldef.txt
+
+Model Cube
+{
+	Path "models/"
+	Model 0 "cube.obj"
+	Skin 0 "cube.jpg"
+	Scale 32.0 32.0 32.0
+	ZOffset 32.0
+	
+	FrameIndex PLAY A 0 0
+}

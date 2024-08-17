@@ -1,0 +1,18 @@
+//zscript/pipe.zsc
+
+Class Cube : Actor
+{
+	Default
+	{
+		Radius 32;
+		Height 64;
+		+SOLID;
+	}
+	
+	States
+	{
+		Spawn:
+			PLAY A -1;
+			Stop;
+	}
+}
