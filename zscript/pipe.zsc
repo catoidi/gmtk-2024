@@ -9,6 +9,7 @@ Class Pipe : Actor
 		Health 30;
 		Radius 32;
 		Height 64;
+		Mass 0x7FFFFFFF;
 		+SOLID;
 		+SHOOTABLE;
 		+NOBLOOD;
@@ -17,15 +18,22 @@ Class Pipe : Actor
 	
 	Pipe End1, End2;
 	int liquid;
+	vector3 oldpos;
+	int oldpostimer;
 	
 	override void tick()
 	{
 		Super.Tick();
 		PipeTick();
+		SpewLiquid();
 	}
 	
 	virtual void PipeTick()
 	{
+		if (Pos == oldpos) {++oldpostimer;}
+		else {oldpostimer = 0;}
+		oldpos = Pos;
+	
 		liquid = 0;
 		double extraX = Pos.X % 64;
 		double extraY = Pos.Y % 64;
@@ -34,7 +42,7 @@ Class Pipe : Actor
 		
 		//collision check
 		LineTrace(0, 8, 0, 0, height / 2, 0, 0, collide);
-		if (collide.HitActor is "Pipe")
+		if ((collide.HitActor is "Pipe") && (oldpostimer < 5))
 		{
 			SetOrigin((Pos.X, Pos.Y, Pos.Z + 64), false);
 		}
@@ -46,6 +54,7 @@ Class Pipe : Actor
 			End1 = Pipe(side1.HitActor);
 			if (End1.liquid > 0) {liquid += 1;}
 		}
+		else {SpewLiquid(65);}
 		//back
 		LineTrace(angle + 180, 64, pitch, 0, height / 2, 0, 0, side2);
 		if (side2.HitActor is "Pipe") 
@@ -53,7 +62,21 @@ Class Pipe : Actor
 			End2 = Pipe(side2.HitActor);
 			if (End2.liquid > 0) {liquid += 2;}
 		}
-		SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		else {SpewLiquid(-65);}
+		
+		
+		if (oldpostimer < 5)
+		{
+			SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		}
+	}
+	
+	virtual void SpewLiquid(double xofs = 0, double yofs = 0, double zofs = 0)
+	{
+		if (liquid > 0)
+		{
+			A_SpawnItemEX("PipeLiquid", xofs, yofs, zofs, xofs / 10, yofs / 10, zofs / 10, 0, SXF_NOCHECKPOSITION, 128);
+		}
 	}
 	
 	States
@@ -68,6 +91,10 @@ Class PipePump : Pipe
 {
 	override void PipeTick()
 	{
+		if (Pos == oldpos) {++oldpostimer;}
+		else {oldpostimer = 0;}
+		oldpos = Pos;
+	
 		liquid = 0;
 		double extraX = Pos.X % 64;
 		double extraY = Pos.Y % 64;
@@ -76,7 +103,57 @@ Class PipePump : Pipe
 		
 		//collision check
 		LineTrace(0, 8, 0, 0, height / 2, 0, 0, collide);
-		if (collide.HitActor is "Pipe")
+		if ((collide.HitActor is "Pipe") && (oldpostimer < 5))
+		{
+			SetOrigin((Pos.X, Pos.Y, Pos.Z + 64), false);
+		}
+		
+		//top
+		LineTrace(0, 64, pitch - 90, 0, height / 2, 0, 0, side1);
+		if (side1.HitActor is "Pipe") 
+		{
+			End1 = Pipe(side1.HitActor);
+			if (End1.liquid > 0) {liquid += 1;}
+		}
+		else {SpewLiquid(0, 0, 65);}
+		//bottom (liquid check)
+		LineTrace(0, 64, pitch + 90, 0, height / 2, 0, 0, side2);
+		if (side2.HitTexture == TexMan.CheckForTexture("WATER"))
+		{
+			liquid += 2;
+		}
+		else if (side2.HitActor is "Pipe")
+		{
+			End2 = Pipe(side2.HitActor);
+			if (End2.liquid > 0) {liquid += 2;}
+		}
+		else {SpewLiquid(0, 0, -65);}
+		
+		if (oldpostimer < 5)
+		{
+			SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		}
+	}
+}
+
+Class PipeBend : Pipe
+{
+	//vertical bend
+	override void PipeTick()
+	{
+		if (Pos == oldpos) {++oldpostimer;}
+		else {oldpostimer = 0;}
+		oldpos = Pos;
+	
+		liquid = 0;
+		double extraX = Pos.X % 64;
+		double extraY = Pos.Y % 64;
+		double extraZ = (Pos.Z + 8) % 64;
+		FLineTraceData side1, side2, collide;
+		
+		//collision check
+		LineTrace(0, 8, 0, 0, height / 2, 0, 0, collide);
+		if ((collide.HitActor is "Pipe") && (oldpostimer < 5))
 		{
 			SetOrigin((Pos.X, Pos.Y, Pos.Z + 64), false);
 		}
@@ -86,15 +163,89 @@ Class PipePump : Pipe
 		if (side1.HitActor is "Pipe") 
 		{
 			End1 = Pipe(side1.HitActor);
-			console.printf("%s", "Found pipe :)");
+			if (End1.liquid > 0) {liquid += 1;}
 		}
+		else {SpewLiquid(65);}
 		//bottom (liquid check)
 		LineTrace(0, 64, pitch + 90, 0, height / 2, 0, 0, side2);
 		if (side2.HitTexture == TexMan.CheckForTexture("WATER"))
 		{
-			liquid += 1;
-			console.printf("%s", "Found water!!!");
+			liquid += 2;
 		}
-		SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		else if (side2.HitActor is "Pipe")
+		{
+			End2 = Pipe(side2.HitActor);
+			if (End2.liquid > 0) {liquid += 2;}
+			console.printf("%s", "found bottom pipe :)");
+		}
+		else {SpewLiquid(0, 0, -65);}
+		
+		if (oldpostimer < 5)
+		{
+			SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		}
+	}
+}
+
+Class PipeBendHorizontal : Pipe
+{
+	override void Tick()
+	{
+		if (Pos == oldpos) {++oldpostimer;}
+		else {oldpostimer = 0;}
+		oldpos = Pos;
+	
+		liquid = 0;
+		double extraX = Pos.X % 64;
+		double extraY = Pos.Y % 64;
+		double extraZ = (Pos.Z + 8) % 64;
+		FLineTraceData side1, side2, collide;
+		
+		//collision check
+		LineTrace(0, 8, 0, 0, height / 2, 0, 0, collide);
+		if ((collide.HitActor is "Pipe") && (oldpostimer < 5))
+		{
+			SetOrigin((Pos.X, Pos.Y, Pos.Z + 64), false);
+		}
+		
+		//front
+		LineTrace(angle, 64, pitch, 0, height / 2, 0, 0, side1);
+		if (side1.HitActor is "Pipe") 
+		{
+			End1 = Pipe(side1.HitActor);
+			if (End1.liquid > 0) {liquid += 1;}
+		}
+		else {SpewLiquid(65);}
+		//right
+		LineTrace(angle + 90, 64, pitch, 0, height / 2, 0, 0, side2);
+		if (side2.HitActor is "Pipe") 
+		{
+			End2 = Pipe(side2.HitActor);
+			if (End2.liquid > 0) {liquid += 2;}
+		}
+		else {SpewLiquid(0, 65);}
+		
+		if (oldpostimer < 5)
+		{
+			SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		}
+	}
+}
+
+Class PipeLiquid : Actor
+{
+	Default
+	{
+		Scale 0.25;
+		+NOBLOCKMAP;
+		+NOCLIP;
+		+NOGRAVITY;
+	}
+	
+	States
+	{
+		Spawn:
+			SMOK A 1 A_FadeOut(0.05);
+			Loop;
 	}
 }

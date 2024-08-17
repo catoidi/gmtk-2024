@@ -7,18 +7,46 @@ Model Pipe
 	Skin 0 "cube.png"
 	Scale 32.0 32.0 32.0
 	ZOffset 32.0
+	USEACTORPITCH
+	USEACTORROLL
 	
 	FrameIndex PLAY A 0 0
 }
 
-
-Model PipePump
+Model PipeBend
 {
 	Path "models/"
 	Model 0 "cube.obj"
 	Skin 0 "cube2.png"
 	Scale 32.0 32.0 32.0
 	ZOffset 32.0
+	USEACTORPITCH
+	USEACTORROLL
+	
+	FrameIndex PLAY A 0 0
+}
+Model PipeBendHorizontal
+{
+	Path "models/"
+	Model 0 "cube.obj"
+	Skin 0 "cube4.png"
+	Scale 32.0 32.0 32.0
+	ZOffset 32.0
+	USEACTORPITCH
+	USEACTORROLL
+	
+	FrameIndex PLAY A 0 0
+}
+
+Model PipePump
+{
+	Path "models/"
+	Model 0 "cube.obj"
+	Skin 0 "cube3.png"
+	Scale 32.0 32.0 32.0
+	ZOffset 32.0
+	USEACTORPITCH
+	USEACTORROLL
 	
 	FrameIndex PLAY A 0 0
 }
