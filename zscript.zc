@@ -1,4 +1,6 @@
-version "3.3.2"
+version "4.12"
 
 #include "zscript/MyStandaloneGamePlayer/MyStandaloneGamePlayer.zc"
 #include "zscript/MyStandaloneGameHUD/MyStandaloneGameHUD.zc"
+
+#include "zscript/ore.zsc"

@@ -1,0 +1,20 @@
+//zscript/ore.zsc
+
+Class Ore : Actor
+{
+	Default
+	{
+		Health 30;
+		Radius 32;
+		Height 64;
+		+SHOOTABLE;
+		+SOLID;
+	}
+	
+	States
+	{
+		Spawn:
+			METL A -1;
+			Stop;
+	}
+}
