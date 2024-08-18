@@ -20,13 +20,36 @@ Class PipeBuilder : Weapon
 			PlayerPawn plr = PlayerPawn(invoker.owner);
 			FLineTraceData bdata;
 			LineTrace(plr.angle, 256, plr.pitch, TRF_SOLIDACTORS, plr.player.mo.height * 0.5 - plr.player.mo.floorclip + plr.player.mo.AttackZOffset*plr.player.crouchFactor, 0, 0, bdata);
+			vector3 newpos = bdata.HitLocation;
+			if (bdata.HitActor is "Pipe")
+			{
+				int chosenface = 0;
+				if ((newpos.X - bdata.HitActor.Pos.X) >= 32) {chosenface = 0;}
+				else if ((newpos.X - bdata.HitActor.Pos.X) <= -32) {chosenface = 1;}
+				else if ((newpos.Y - bdata.HitActor.Pos.Y) >= 32) {chosenface = 2;}
+				else if ((newpos.Y - bdata.HitActor.Pos.Y) <= -32) {chosenface = 3;}
+				else if ((newpos.Z - (bdata.HitActor.Pos.Z + 32)) >= 32) {chosenface = 4;}
+				else if ((newpos.Z - (bdata.HitActor.Pos.Z + 32)) <= -32) {chosenface = 5;}
+				
+				switch (chosenface)
+				{
+					case 0: newpos += (64, 0, 0); break;
+					//case 1: newpos += (-64, 0, 0); break;
+					case 2: newpos += (0, 64, 0); break;
+					//case 3: newpos += (0, -64, 0); break;
+					//case 4: newpos += (0, 0, 64); break;
+					case 5: newpos += (0, 0, -64); break;
+				}
+			}
+			
+			
 			if (!invoker.trace) 
 			{
-				A_SpawnItemEX("BuilderTrace", bdata.HitLocation.X, bdata.HitLocation.Y, bdata.HitLocation.Z, angle: 0, flags: SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION | SXF_SETTARGET);
+				A_SpawnItemEX("BuilderTrace", newpos.X, newpos.Y, newpos.Z, angle: 0, flags: SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION | SXF_SETTARGET);
 			}
 			else 
 			{
-				invoker.trace.truepos = bdata.HitLocation;
+				invoker.trace.truepos = newpos;
 				invoker.trace.bINVISIBLE = false;
 			}
 		}
