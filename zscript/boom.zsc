@@ -1,0 +1,104 @@
+//boom.zsc
+
+CLASS SafeBoom : Actor
+{
+	//code was copy/pasted from di-game.
+
+	Default
+	{
+		Radius 4;
+		Height 4;
+		
+		+NOGRAVITY;
+		-SOLID;
+		-BLOCKEDBYSOLIDACTORS;
+		-MOVEWITHSECTOR;
+		+ROLLSPRITE;
+		+SPRITEANGLE;
+		+FORCEXYBILLBOARD;
+		+NOLIFTDROP;
+	}
+	
+	action void A_DIScale (double ScaleAmountX, double ScaleAmountY, bool IsMultiply = false, bool DoSize = false)
+	{
+	
+		if (invoker)
+		{
+			if (IsMultiply == false)
+			{
+				//don't ask.
+				invoker.Scale.X += ScaleAmountX;
+				invoker.Scale.Y += ScaleAmountY;
+			}
+			else
+			{
+				invoker.Scale.X = invoker.Scale.X * ScaleAmountX;
+				invoker.Scale.Y = invoker.Scale.Y * ScaleAmountY;
+			}
+			
+			if (DoSize == true)
+			{
+				double r = invoker.Scale.X * invoker.default.Radius;
+				double h = invoker.Scale.Y * invoker.default.Height;
+				invoker.A_SetSize(r, h);
+			}
+		}
+	}
+	
+	States
+	{
+		Spawn:
+			TNT1 A 0 NoDelay A_SetRoll(random(0, 359));
+			BOOM A 0 BRIGHT A_Jump(256, "Booming");
+		Booming:
+			#### # 0 BRIGHT 
+			{
+				A_AttachLightDef("Boomer", "BIGBOOM");
+				A_StartSound("boxboom", 0, CHANF_OVERLAP, 0.5);
+				for (int i = 0; i < 16; ++i)
+				{
+					if (i < 5)
+					{
+						A_SpawnItemEX("SafeBoomExtra", frandom(-4, 4), frandom(-4, 4), frandom(-4, 4), frandom(-4, 4), frandom(-4, 4), frandom(-4, 4), 0, SXF_NOCHECKPOSITION | SXF_TRANSFERSPRITEFRAME);
+					}
+					A_SpawnParticle("ffeb00", SPF_FULLBRIGHT | SPF_RELVEL, 48, 8, random(0, 359), 0, 0, 0, random(0, 16), 0, random(0, 8), 0, 0, -0.33, 1.0, -1, -0.15);
+				}
+			}
+			#### # 0 A_Jump(256, "Expander");
+		Expander:
+			#### # 1 BRIGHT A_FadeOut(0.1);
+			#### # 0 BRIGHT A_DIScale(0.1, 0.1);
+			Loop;
+	}
+}
+
+CLASS SafeBoomExtra : SafeBoom
+{
+	Default
+	{
+		Renderstyle "Translucent";
+		Alpha 0.5;
+		+DONTSPLASH;
+		+ROLLCENTER;
+	}
+
+	States
+	{
+		Spawn:
+			#### # 0 NoDelay 
+			{
+				A_SetRoll(random(0, 359));
+				if (random(0, 1) == 1)
+				{
+					bFLATSPRITE = true;
+					self.Pitch = random(0, 359);
+					self.Angle = random(0, 359);
+				}
+			}
+			Goto Expander;
+		Expander:
+			#### # 1 BRIGHT A_FadeOut(0.05);
+			#### # 0 BRIGHT A_DIScale(0.1, 0.1);
+			Loop;
+	}
+}

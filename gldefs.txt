@@ -4,3 +4,13 @@ pointlight BULLETSPARK
 	size 10
 	offset 0 0 0
 }
+
+pulselight BIGBOOM
+{
+	color 1.0 0.5 0.0
+	size 24
+	offset 0 24 0
+	secondarysize 48
+	interval 0.15
+	dontlightself 1
+}

@@ -21,6 +21,7 @@ Class Ore : Actor
 		Death:
 			TNT1 A 1
 			{
+				A_SpawnItemEX("SafeBoom", 0, 0, 32, flags: SXF_NOCHECKPOSITION);
 				for (int i = 0; i < 5; ++i) {A_SpawnItemEX("Metal", random(-8, 8), random(-8, 8), random(32, 48), random(-8, 8), random(-8, 8), random(2, 6), flags: SXF_NOCHECKPOSITION);}
 			}
 			Stop;

@@ -40,6 +40,8 @@ Class PipeBuilder : Weapon
 					//case 4: newpos += (0, 0, 64); break;
 					case 5: newpos += (0, 0, -64); break;
 				}
+				
+				console.printf("%d", chosenface);
 			}
 			
 			

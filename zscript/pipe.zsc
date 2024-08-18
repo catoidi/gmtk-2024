@@ -76,7 +76,7 @@ Class Pipe : Actor
 	
 	virtual void SpewLiquid(double xofs = 0, double yofs = 0, double zofs = 0)
 	{
-		if (liquid > 0)
+		if ((liquid > 0) && (liquid < 3))
 		{
 			A_SpawnItemEX("PipeLiquid", xofs, yofs, zofs, xofs / 10, yofs / 10, zofs / 10, 0, SXF_NOCHECKPOSITION, 128);
 		}
@@ -90,6 +90,7 @@ Class Pipe : Actor
 		Death:
 			TNT1 A 1
 			{
+				A_SpawnItemEX("SafeBoom", 0, 0, 32, flags: SXF_NOCHECKPOSITION);
 				A_SpawnItemEX("Metal", 0, 0, 32, flags: SXF_NOCHECKPOSITION);
 			}
 			Stop;
@@ -127,7 +128,6 @@ Class PipePump : Pipe
 			End1 = Pipe(side1.HitActor);
 			if (End1.liquid > 0) {liquid += 1;}
 		}
-		else {SpewLiquid(0, 0, 65);}
 		//bottom (liquid check)
 		LineTrace(0, 64, pitch + 90, 0, height / 2, 0, 0, side2);
 		if (side2.HitTexture == TexMan.CheckForTexture("WATER"))
@@ -139,7 +139,6 @@ Class PipePump : Pipe
 			End2 = Pipe(side2.HitActor);
 			if (End2.liquid > 0) {liquid += 2;}
 		}
-		else {SpewLiquid(0, 0, -65);}
 		
 		if (oldpostimer < 5)
 		{
@@ -180,7 +179,6 @@ Class PipeBend : Pipe
 			End1 = Pipe(side1.HitActor);
 			if (End1.liquid > 0) {liquid += 1;}
 		}
-		else {SpewLiquid(65);}
 		//bottom (liquid check)
 		LineTrace(0, 64, pitch + 90, 0, height / 2, 0, 0, side2);
 		if (side2.HitTexture == TexMan.CheckForTexture("WATER"))
@@ -193,7 +191,6 @@ Class PipeBend : Pipe
 			if (End2.liquid > 0) {liquid += 2;}
 			//console.printf("%s", "found bottom pipe :)");
 		}
-		else {SpewLiquid(0, 0, -65);}
 		
 		if (oldpostimer < 5)
 		{
@@ -233,7 +230,6 @@ Class PipeBendHorizontal : Pipe
 			End1 = Pipe(side1.HitActor);
 			if (End1.liquid > 0) {liquid += 1;}
 		}
-		else {SpewLiquid(65);}
 		//right
 		LineTrace(angle + 90, 64, pitch, 0, height / 2, 0, 0, side2);
 		if (side2.HitActor is "Pipe") 
@@ -241,7 +237,6 @@ Class PipeBendHorizontal : Pipe
 			End2 = Pipe(side2.HitActor);
 			if (End2.liquid > 0) {liquid += 2;}
 		}
-		else {SpewLiquid(0, 65);}
 		
 		if (oldpostimer < 5)
 		{
@@ -254,6 +249,8 @@ Class PipeLiquid : Actor
 {
 	Default
 	{
+		Height 0;
+		Radius 0;
 		Scale 0.25;
 		+NOBLOCKMAP;
 		+NOCLIP;
@@ -265,5 +262,25 @@ Class PipeLiquid : Actor
 		Spawn:
 			SMOK A 1 A_FadeOut(0.05);
 			Loop;
+	}
+}
+
+Class FuelDuct : Actor
+{
+	Default
+	{
+		Radius 32;
+		Height 64;
+		Mass 0x7FFFFFFF;
+		+SOLID;
+	}
+	
+	bool isconnected;
+	
+	States
+	{
+		Spawn:
+			PLAY A -1;
+			Stop;
 	}
 }

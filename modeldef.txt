@@ -50,3 +50,16 @@ Model PipePump
 	
 	FrameIndex PLAY A 0 0
 }
+
+Model FuelDuct
+{
+	Path "models/"
+	Model 0 "cube.obj"
+	Skin 0 "cube5.png"
+	Scale 32.0 32.0 32.0
+	ZOffset 32.0
+	USEACTORPITCH
+	USEACTORROLL
+	
+	FrameIndex PLAY A 0 0
+}

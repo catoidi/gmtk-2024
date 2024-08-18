@@ -1,10 +1,10 @@
 version "4.12"
 
-#include "zscript/MyStandaloneGamePlayer/MyStandaloneGamePlayer.zc"
-#include "zscript/MyStandaloneGameHUD/MyStandaloneGameHUD.zc"
-
+#include "zscript/player.zsc"
+#include "zscript/hud.zsc"
 #include "zscript/ore.zsc"
 #include "zscript/smoke.zsc"
 #include "zscript/drill.zsc"
 #include "zscript/pipe.zsc"
 #include "zscript/builder.zsc"
+#include "zscript/boom.zsc"

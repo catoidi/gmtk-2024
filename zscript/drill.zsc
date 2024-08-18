@@ -20,11 +20,14 @@ Class OreDrill : Weapon
 			DRIL A 1 A_WeaponReady();
 			Loop;
 		Fire:
-			#### # 0 A_CustomPunch(1, true, CPF_PULLIN, "Drill_Puff");
+			#### ##### 1 A_OverlayOffset(PSP_WEAPON, 6, -6, WOF_ADD);
+		Hold:
+			#### # 0 A_CustomPunch(1, true, 0, "Drill_Puff", 128);
 			DRIL ABCD 1;
-			#### # 0 A_Refire();
-			DRIL ABCD 2 A_Refire();
-			DRIL ABCD 3 A_Refire();
+			#### # 0 A_Refire("Hold");
+			DRIL ABCD 2 A_Refire("Hold");
+			DRIL ABCD 3 A_Refire("Hold");
+			#### ##### 1 A_OverlayOffset(PSP_WEAPON, -6, 6, WOF_ADD);
 			Goto Ready;
 	}
 }

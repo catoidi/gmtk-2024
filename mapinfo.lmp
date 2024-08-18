@@ -62,4 +62,5 @@ DoomEdNums
 {
 	23000 = Ore
 	23001 = FuelSmoke
+	23002 = FuelDuct
 }
