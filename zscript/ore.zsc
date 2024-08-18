@@ -18,5 +18,33 @@ Class Ore : Actor
 		Spawn:
 			METL A -1;
 			Stop;
+		Death:
+			TNT1 A 1
+			{
+				for (int i = 0; i < 5; ++i) {A_SpawnItemEX("Metal", random(-8, 8), random(-8, 8), random(32, 48), random(-8, 8), random(-8, 8), random(2, 6), flags: SXF_NOCHECKPOSITION);}
+			}
+			Stop;
+	}
+}
+
+Class Metal : Ammo
+{
+	Default
+	{
+		Radius 12;
+		Height 24;
+		Inventory.Amount 1;
+		Inventory.MaxAmount 10000;
+		Inventory.PickupMessage "You got metals!";
+		+Inventory.ALWAYSPICKUP;
+		+FLOATBOB;
+		+CASTSPRITESHADOW;
+	}
+	
+	States
+	{
+		Spawn:
+			METL B -1;
+			Stop;
 	}
 }

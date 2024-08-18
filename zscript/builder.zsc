@@ -6,11 +6,31 @@ Class PipeBuilder : Weapon
 	{
 		Weapon.WeaponScaleY 1.0;
 		Weapon.SlotNumber 2;
+		+WEAPON.NOAUTOFIRE;
 	}
 	
 	BuilderTrace trace;
 	int pipemode;
 	int pipeangle;
+	
+	action void PipeTrace()
+	{
+		if (invoker.owner is "PlayerPawn")
+		{
+			PlayerPawn plr = PlayerPawn(invoker.owner);
+			FLineTraceData bdata;
+			LineTrace(plr.angle, 256, plr.pitch, TRF_SOLIDACTORS, plr.player.mo.height * 0.5 - plr.player.mo.floorclip + plr.player.mo.AttackZOffset*plr.player.crouchFactor, 0, 0, bdata);
+			if (!invoker.trace) 
+			{
+				A_SpawnItemEX("BuilderTrace", bdata.HitLocation.X, bdata.HitLocation.Y, bdata.HitLocation.Z, angle: 0, flags: SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION | SXF_SETTARGET);
+			}
+			else 
+			{
+				invoker.trace.truepos = bdata.HitLocation;
+				invoker.trace.bINVISIBLE = false;
+			}
+		}
+	}
 
 	States
 	{	
@@ -22,8 +42,7 @@ Class PipeBuilder : Weapon
 			{
 				if (invoker.trace)
 				{
-					invoker.trace.A_Jump(256, "Death");
-					invoker.trace = null;
+					invoker.trace.bINVISIBLE = true;;
 				}
 			}
 			CHES A 1 A_Lower;
@@ -31,38 +50,45 @@ Class PipeBuilder : Weapon
 		Ready:
 			CHES A 1 
 			{
-				A_WeaponReady();
-				if (invoker.owner is "PlayerPawn")
-				{
-					PlayerPawn plr = PlayerPawn(invoker.owner);
-					FLineTraceData bdata;
-					LineTrace(plr.angle, 256, plr.pitch, TRF_SOLIDACTORS, plr.player.mo.height * 0.5 - plr.player.mo.floorclip + plr.player.mo.AttackZOffset*plr.player.crouchFactor, 0, 0, bdata);
-					if (!invoker.trace) 
-					{
-						A_SpawnItemEX("BuilderTrace", bdata.HitLocation.X, bdata.HitLocation.Y, bdata.HitLocation.Z, angle: 0, flags: SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION | SXF_SETTARGET);
-					}
-					else 
-					{
-						invoker.trace.SetOrigin(bdata.HitLocation, true);
-						invoker.trace.angle = invoker.owner.angle;
-						invoker.trace.pitch = invoker.owner.pitch;
-					}
-				}
+				A_WeaponReady(WRF_ALLOWRELOAD);
+				PipeTrace();
 			}
 			Loop;
 		Fire:
 			#### # 1 
 			{
+				if (CountInv("Metal") == 0) {return FindState("NoAmmo");}
 				if (invoker.trace)
 				{
-					invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: 0, flags: SXF_ABSOLUTEANGLE, SXF_NOCHECKPOSITION);
+					bool placed = false;
+					actor thing;
+					[placed, thing] = invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: invoker.trace.angle, flags: SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION);
+					if (thing) {A_TakeInventory("Metal", 1);}
 				}
+				return FindState(null);
 			}
-			#### # 0 A_Refire("Chill");
 			Goto Ready;
-		Chill:
-			#### # 1;
-			#### # 1 A_Refire("Chill");
+		AltFire:
+			#### # 1 
+			{
+				if (invoker.pipemode < 3) {++invoker.pipemode;}
+				else {invoker.pipemode = 0;}
+				console.printf("Pipe Type: %d", invoker.pipemode);
+			}
+			Goto Ready;
+		Reload:
+			#### # 0 
+			{
+				++invoker.pipeangle;
+				console.printf("Pipe Direction: %d", invoker.pipeangle);
+			}
+			#### ######### 1 PipeTrace();
+			Goto Ready;
+		NoAmmo:
+			#### # 1 A_OverlayOffset(PSP_WEAPON, 0, 4, WOF_ADD);
+			#### #### 1 A_OverlayOffset(PSP_WEAPON, 0, -1, WOF_ADD);
+			#### # 4;
+			#### # 0 A_Jump(256, "Ready");
 			Goto Ready;
 	}
 }
@@ -74,14 +100,21 @@ Class BuilderTrace : Actor
 		Height 2;
 		Radius 1;
 		Renderstyle "Translucent";
-		Alpha 0.5;
+		Alpha 0.25;
+		+BRIGHT;
 		+NOCLIP;
 		+NOBLOCKMAP;
 		+NOGRAVITY;
 		+BRIGHT;
 	}
 	
+	vector3 truepos;
 	string pipespawner;
+	
+	virtual state GiveUp()
+	{
+		return ResolveState("Death");
+	}
 	
 	override void tick()
 	{
@@ -109,15 +142,35 @@ Class BuilderTrace : Actor
 					pipespawner = "PipePump";
 					break;
 			}
-			angle = builder.pipeangle * 90;
-			A_ChangeModel("Pipe", 0, "models/", "cube.obj", 0, "models/", pipeskin);
+			int bangle = ((builder.pipeangle * 90) - angle) / 2;
+			angle += bangle;
+			A_ChangeModel(pipespawner);
+			
+			
+			double extraX = truepos.X % 64;
+			if (extraX > 32) {extraX -= 64;}
+			double extraY = truepos.Y % 64;
+			if (extraY > 32) {extraY -= 64;}
+			double extraZ = (truepos.Z + 8) % 64;
+			if (extraZ > 32) {extraZ -= 64;}
+			FLineTraceData collide;
+			
+			//collision check
+			LineTrace(0, 8, 0, 0, 32, 0, 0, collide);
+			if (collide.HitActor is "Pipe")
+			{
+				SetOrigin((truepos.X, truepos.Y, truepos.Z + 64), false);
+			}
+			SetOrigin((truepos.X - extraX, truepos.Y - extraY, truepos.Z - extraZ), false);
+			
+			console.printf("%d, %d, %d", Pos.X, Pos.Y, Pos.Z);
 		}
 	}
 	
 	States
 	{
 		Spawn:
-			SMOK A 1;
+			PLAY A 1;
 			Loop;
 		Death:
 			#### # 1;

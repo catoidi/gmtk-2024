@@ -6,7 +6,7 @@ Class Pipe : Actor
 	
 	Default
 	{
-		Health 30;
+		Health 4;
 		Radius 32;
 		Height 64;
 		Mass 0x7FFFFFFF;
@@ -86,6 +86,12 @@ Class Pipe : Actor
 	{
 		Spawn:
 			PLAY A -1;
+			Stop;
+		Death:
+			TNT1 A 1
+			{
+				A_SpawnItemEX("Metal", 0, 0, 32, flags: SXF_NOCHECKPOSITION);
+			}
 			Stop;
 	}
 }
@@ -185,7 +191,7 @@ Class PipeBend : Pipe
 		{
 			End2 = Pipe(side2.HitActor);
 			if (End2.liquid > 0) {liquid += 2;}
-			console.printf("%s", "found bottom pipe :)");
+			//console.printf("%s", "found bottom pipe :)");
 		}
 		else {SpewLiquid(0, 0, -65);}
 		
