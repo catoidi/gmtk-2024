@@ -37,6 +37,18 @@ Model PipeBendHorizontal
 	
 	FrameIndex PLAY A 0 0
 }
+Model PipeBendTop
+{
+	Path "models/"
+	Model 0 "cube.obj"
+	Skin 0 "cube6.png"
+	Scale 32.0 32.0 32.0
+	ZOffset 32.0
+	USEACTORPITCH
+	USEACTORROLL
+	
+	FrameIndex PLAY A 0 0
+}
 
 Model PipePump
 {

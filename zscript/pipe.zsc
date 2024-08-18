@@ -57,7 +57,6 @@ Class Pipe : Actor
 			End1 = Pipe(side1.HitActor);
 			if (End1.liquid > 0) {liquid += 1;}
 		}
-		else {SpewLiquid(65);}
 		//back
 		LineTrace(angle + 180, 64, pitch, 0, height / 2, 0, 0, side2);
 		if (side2.HitActor is "Pipe") 
@@ -65,7 +64,6 @@ Class Pipe : Actor
 			End2 = Pipe(side2.HitActor);
 			if (End2.liquid > 0) {liquid += 2;}
 		}
-		else {SpewLiquid(-65);}
 		
 		
 		if (oldpostimer < 5)
@@ -78,7 +76,8 @@ Class Pipe : Actor
 	{
 		if ((liquid > 0) && (liquid < 3))
 		{
-			A_SpawnItemEX("PipeLiquid", xofs, yofs, zofs, xofs / 10, yofs / 10, zofs / 10, 0, SXF_NOCHECKPOSITION, 128);
+			A_SpawnParticleEX("White", TexMan.CheckForTexture("SMOKA0"), STYLE_None, SPF_FULLBRIGHT | SPF_ROLL, 35, 8, 0, random(-72, 72), random(-72, 72), random(-72, 72), 0, 0, 0, 0, 0, -0.33, 1, -1, -0.25, random(0, 359));
+			//A_SpawnItemEX("PipeLiquid", xofs, yofs, zofs, xofs / 10, yofs / 10, zofs / 10, 0, SXF_NOCHECKPOSITION, 128);
 		}
 	}
 	
@@ -149,7 +148,7 @@ Class PipePump : Pipe
 
 Class PipeBend : Pipe
 {
-	//vertical bend
+	//Vertical Bend (L-shape)
 	override void PipeTick()
 	{
 		if (Pos == oldpos) {++oldpostimer;}
@@ -236,6 +235,53 @@ Class PipeBendHorizontal : Pipe
 		{
 			End2 = Pipe(side2.HitActor);
 			if (End2.liquid > 0) {liquid += 2;}
+		}
+		
+		if (oldpostimer < 5)
+		{
+			SetOrigin((Pos.X - extraX, Pos.Y - extraY, Pos.Z - extraZ), true);
+		}
+	}
+}
+
+Class PipeBendTop : Pipe
+{
+	//Vertical Bend (R-shape)
+	override void PipeTick()
+	{
+		if (Pos == oldpos) {++oldpostimer;}
+		else {oldpostimer = 0;}
+		oldpos = Pos;
+	
+		liquid = 0;
+		double extraX = Pos.X % 64;
+		if (extraX > 32) {extraX -= 64;}
+		double extraY = Pos.Y % 64;
+		if (extraY > 32) {extraY -= 64;}
+		double extraZ = (Pos.Z + 8) % 64;
+		if (extraZ > 32) {extraZ -= 64;}
+		FLineTraceData side1, side2, collide;
+		
+		//collision check
+		LineTrace(0, 8, 0, 0, height / 2, 0, 0, collide);
+		if ((collide.HitActor is "Pipe") && (oldpostimer < 5))
+		{
+			SetOrigin((Pos.X, Pos.Y, Pos.Z + 64), false);
+		}
+		
+		//top
+		LineTrace(0, 64, pitch - 90, 0, height / 2, 0, 0, side2);
+		if (side2.HitActor is "Pipe") 
+		{
+			End2 = Pipe(side2.HitActor);
+			if (End2.liquid > 0) {liquid += 1;}
+		}
+		//front
+		LineTrace(angle, 64, pitch, 0, height / 2, 0, 0, side1);
+		if (side1.HitActor is "Pipe") 
+		{
+			End1 = Pipe(side1.HitActor);
+			if (End1.liquid > 0) {liquid += 2;}
 		}
 		
 		if (oldpostimer < 5)

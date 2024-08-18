@@ -41,7 +41,7 @@ Class PipeBuilder : Weapon
 					case 5: newpos += (0, 0, -64); break;
 				}
 				
-				console.printf("%d", chosenface);
+				//console.printf("%d", chosenface);
 			}
 			
 			
@@ -96,9 +96,9 @@ Class PipeBuilder : Weapon
 		AltFire:
 			#### # 1 
 			{
-				if (invoker.pipemode < 3) {++invoker.pipemode;}
+				if (invoker.pipemode < 4) {++invoker.pipemode;}
 				else {invoker.pipemode = 0;}
-				console.printf("Pipe Type: %d", invoker.pipemode);
+				//console.printf("Pipe Type: %d", invoker.pipemode);
 			}
 			Goto Ready;
 		Reload:
@@ -158,11 +158,15 @@ Class BuilderTrace : Actor
 					pipeskin = "cube2.png";
 					pipespawner = "PipeBend";
 					break;
-				case 2: 
+				case 2:
+					pipeskin = "cube6.png";
+					pipespawner = "PipeBendTop";
+					break;
+				case 3: 
 					pipeskin = "cube4.png";
 					pipespawner = "PipeBendHorizontal";
 					break;
-				case 3: 
+				case 4: 
 					pipeskin = "cube3.png";
 					pipespawner = "PipePump";
 					break;
