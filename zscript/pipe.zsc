@@ -36,8 +36,11 @@ Class Pipe : Actor
 	
 		liquid = 0;
 		double extraX = Pos.X % 64;
+		if (extraX > 32) {extraX -= 64;}
 		double extraY = Pos.Y % 64;
+		if (extraY > 32) {extraY -= 64;}
 		double extraZ = (Pos.Z + 8) % 64;
+		if (extraZ > 32) {extraZ -= 64;}
 		FLineTraceData side1, side2, collide;
 		
 		//collision check
@@ -97,8 +100,11 @@ Class PipePump : Pipe
 	
 		liquid = 0;
 		double extraX = Pos.X % 64;
+		if (extraX > 32) {extraX -= 64;}
 		double extraY = Pos.Y % 64;
+		if (extraY > 32) {extraY -= 64;}
 		double extraZ = (Pos.Z + 8) % 64;
+		if (extraZ > 32) {extraZ -= 64;}
 		FLineTraceData side1, side2, collide;
 		
 		//collision check
@@ -147,8 +153,11 @@ Class PipeBend : Pipe
 	
 		liquid = 0;
 		double extraX = Pos.X % 64;
+		if (extraX > 32) {extraX -= 64;}
 		double extraY = Pos.Y % 64;
+		if (extraY > 32) {extraY -= 64;}
 		double extraZ = (Pos.Z + 8) % 64;
+		if (extraZ > 32) {extraZ -= 64;}
 		FLineTraceData side1, side2, collide;
 		
 		//collision check
@@ -197,8 +206,11 @@ Class PipeBendHorizontal : Pipe
 	
 		liquid = 0;
 		double extraX = Pos.X % 64;
+		if (extraX > 32) {extraX -= 64;}
 		double extraY = Pos.Y % 64;
+		if (extraY > 32) {extraY -= 64;}
 		double extraZ = (Pos.Z + 8) % 64;
+		if (extraZ > 32) {extraZ -= 64;}
 		FLineTraceData side1, side2, collide;
 		
 		//collision check

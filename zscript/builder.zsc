@@ -1,1 +1,126 @@
 //zscript/builder.zsc
+
+Class PipeBuilder : Weapon
+{
+	Default
+	{
+		Weapon.WeaponScaleY 1.0;
+		Weapon.SlotNumber 2;
+	}
+	
+	BuilderTrace trace;
+	int pipemode;
+	int pipeangle;
+
+	States
+	{	
+		Select:
+			CHES A 1 A_Raise;
+			Loop;
+		Deselect:
+			#### # 0
+			{
+				if (invoker.trace)
+				{
+					invoker.trace.A_Jump(256, "Death");
+					invoker.trace = null;
+				}
+			}
+			CHES A 1 A_Lower;
+			Loop;
+		Ready:
+			CHES A 1 
+			{
+				A_WeaponReady();
+				if (invoker.owner is "PlayerPawn")
+				{
+					PlayerPawn plr = PlayerPawn(invoker.owner);
+					FLineTraceData bdata;
+					LineTrace(plr.angle, 256, plr.pitch, TRF_SOLIDACTORS, plr.player.mo.height * 0.5 - plr.player.mo.floorclip + plr.player.mo.AttackZOffset*plr.player.crouchFactor, 0, 0, bdata);
+					if (!invoker.trace) 
+					{
+						A_SpawnItemEX("BuilderTrace", bdata.HitLocation.X, bdata.HitLocation.Y, bdata.HitLocation.Z, angle: 0, flags: SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION | SXF_SETTARGET);
+					}
+					else 
+					{
+						invoker.trace.SetOrigin(bdata.HitLocation, true);
+						invoker.trace.angle = invoker.owner.angle;
+						invoker.trace.pitch = invoker.owner.pitch;
+					}
+				}
+			}
+			Loop;
+		Fire:
+			#### # 1 
+			{
+				if (invoker.trace)
+				{
+					invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: 0, flags: SXF_ABSOLUTEANGLE, SXF_NOCHECKPOSITION);
+				}
+			}
+			#### # 0 A_Refire("Chill");
+			Goto Ready;
+		Chill:
+			#### # 1;
+			#### # 1 A_Refire("Chill");
+			Goto Ready;
+	}
+}
+
+Class BuilderTrace : Actor
+{
+	Default
+	{
+		Height 2;
+		Radius 1;
+		Renderstyle "Translucent";
+		Alpha 0.5;
+		+NOCLIP;
+		+NOBLOCKMAP;
+		+NOGRAVITY;
+		+BRIGHT;
+	}
+	
+	string pipespawner;
+	
+	override void tick()
+	{
+		if (target.player.ReadyWeapon is "PipeBuilder")
+		{
+			PipeBuilder builder = PipeBuilder(target.player.ReadyWeapon);
+			builder.trace = self;
+			string pipeskin;
+			switch (builder.pipemode)
+			{
+				case 0: 
+					pipeskin = "cube.png";
+					pipespawner = "Pipe";
+					break;
+				case 1: 
+					pipeskin = "cube2.png";
+					pipespawner = "PipeBend";
+					break;
+				case 2: 
+					pipeskin = "cube4.png";
+					pipespawner = "PipeBendHorizontal";
+					break;
+				case 3: 
+					pipeskin = "cube3.png";
+					pipespawner = "PipePump";
+					break;
+			}
+			angle = builder.pipeangle * 90;
+			A_ChangeModel("Pipe", 0, "models/", "cube.obj", 0, "models/", pipeskin);
+		}
+	}
+	
+	States
+	{
+		Spawn:
+			SMOK A 1;
+			Loop;
+		Death:
+			#### # 1;
+			Stop;
+	}
+}

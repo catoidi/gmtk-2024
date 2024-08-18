@@ -15,6 +15,7 @@ class MyStandaloneGamePlayer : PlayerPawn
 		Player.Colorset 1, "$TXT_COLOR_RED", 96, 143, 96;
 		Player.Colorset 2, "$TXT_COLOR_BLUE", 192, 239, 192;
 		Player.StartItem "OreDrill";
+		Player.StartItem "PipeBuilder";
 	}
 
 	States

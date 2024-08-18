@@ -4,6 +4,7 @@ Class OreDrill : Weapon
 {
 	Default
 	{
+		Weapon.SlotNumber 1;
 		Weapon.WeaponScaleY 1.0;
 	}
 
