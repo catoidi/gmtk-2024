@@ -1,0 +1,17 @@
+//zscript/handler.zsc
+
+Class ExoplanetHandler : EventHandler
+{
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.Name == 'DoDoorTeleport')
+		{
+			int newX = e.Args[0];
+			int newY = e.Args[1];
+			let plr = MyStandaloneGamePlayer(players[e.Player].mo);
+			plr.SetOrigin((plr.Pos.X, plr.Pos.Y, plr.FloorZ), false);
+			plr.Teleport((plr.Pos.X + newX, plr.Pos.Y + newY, plr.Pos.Z), plr.angle, 0);
+			plr.A_StartSound("key01", CHAN_AUTO, attenuation: ATTN_NONE);
+		}
+	}
+}

@@ -17,7 +17,7 @@ GameInfo
 	DimAmount = 0.8
 	PlayerClasses = "MyStandaloneGamePlayer"
 	StatusbarClass = "MyStandaloneGameHUD"
-	AddEventHandlers = "NashHPBarHandler"
+	AddEventHandlers = "ExoplanetHandler", "NashHPBarHandler"
 }
 
 GameDefaults
@@ -49,7 +49,6 @@ Skill normal
 Map "MAP01" "$TXT_MAP01"
 {
 	Sky1 = "textures/sky1.png"
-	Gravity = 300
 	//OutsideFog = "e000b6"
 	OutsideFogDensity = 8
 }
