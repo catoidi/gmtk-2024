@@ -21,7 +21,7 @@ Class PipeBuilder : Weapon
 			FLineTraceData bdata;
 			LineTrace(plr.angle, 256, plr.pitch, TRF_SOLIDACTORS, plr.player.mo.height * 0.5 - plr.player.mo.floorclip + plr.player.mo.AttackZOffset*plr.player.crouchFactor, 0, 0, bdata);
 			vector3 newpos = bdata.HitLocation;
-			if (bdata.HitActor is "Pipe")
+			if ((bdata.HitActor is "Pipe") || (bdata.HitActor is "FuelDuct"))
 			{
 				int chosenface = 0;
 				if ((newpos.X - bdata.HitActor.Pos.X) >= 32) {chosenface = 0;}
@@ -130,16 +130,18 @@ Class BuilderTrace : Actor
 		Height 2;
 		Radius 1;
 		Renderstyle "Translucent";
-		Alpha 0.25;
+		//Alpha 0.5;
 		+BRIGHT;
 		+NOCLIP;
 		+NOBLOCKMAP;
 		+NOGRAVITY;
 		+BRIGHT;
+		+VISIBILITYPULSE;
 	}
 	
 	vector3 truepos;
 	string pipespawner;
+	int alphatimer;
 	
 	virtual state GiveUp()
 	{
@@ -148,6 +150,9 @@ Class BuilderTrace : Actor
 	
 	override void tick()
 	{
+		alphatimer += 10;
+		alpha = 0.5 + (sin(alphatimer) / 10);
+	
 		if (target.player.ReadyWeapon is "PipeBuilder")
 		{
 			PipeBuilder builder = PipeBuilder(target.player.ReadyWeapon);
