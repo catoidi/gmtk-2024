@@ -1,0 +1,28 @@
+//zscript/oxygen.zsc
+
+Class Oxygen : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 100;
+	}
+}
+
+Class OxygenGiver : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+	}
+	
+	int timer;
+	override void DoEffect()
+	{
+		++timer;
+		if (owner && (timer >= 7))
+		{
+			owner.GiveInventory("Oxygen", 1);
+			timer = 0;
+		}
+	}
+}

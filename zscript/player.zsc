@@ -16,6 +16,28 @@ class MyStandaloneGamePlayer : PlayerPawn
 		Player.Colorset 2, "$TXT_COLOR_BLUE", 192, 239, 192;
 		Player.StartItem "OreDrill";
 		Player.StartItem "PipeBuilder";
+		Player.StartItem "Oxygen", 100;
+	}
+	
+	int oxygentimer;
+	
+	override void tick()
+	{
+		super.tick();
+		if (isFrozen() == false)
+		{
+			if (CountInv("OxygenGiver") == 0)
+			{
+				++oxygentimer;
+				if (oxygentimer >= 70)
+				{
+					TakeInventory("Oxygen", 1);
+					oxygentimer = 0;
+				}
+			}
+			
+			
+		}
 	}
 
 	States

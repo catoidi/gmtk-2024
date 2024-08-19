@@ -10,6 +10,7 @@ version "4.12"
 #include "zscript/boom.zsc"
 #include "zscript/tooltip.zsc"
 #include "zscript/handler.zsc"
+#include "zscript/oxygen.zsc"
 
 //nashhpbar
 #include "zscript/NashHPBar/NashHPBarOptionMenu/NashHPBarOptionMenu.zsc"
