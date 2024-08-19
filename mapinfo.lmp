@@ -48,14 +48,14 @@ Skill normal
 
 Map "MAP01" "$TXT_MAP01"
 {
-	Sky1 = "textures/sky1.png"
+	Sky1 = "textures/sky1.png", 0.05
 	//OutsideFog = "e000b6"
 	OutsideFogDensity = 8
 }
 
 Map "TITLEMAP" "Title"
 {
-	Sky1 = "textures/sky1.png"
+	Sky1 = "textures/sky1.png", 0.05
 }
 
 DoomEdNums
@@ -69,4 +69,7 @@ DoomEdNums
 	23006 = PipeBend
 	23007 = Pipe
 	23008 = Sign
+	23009 = TallSpike
+	23010 = ShortSpike
+	23011 = RockPile
 }

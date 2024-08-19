@@ -3,8 +3,12 @@
 //water
 terrain	boxwater
 {
+	friction 0.5
 	footclip	 6
+	damagetype sludge
+	damageamount 10
 	liquid
+	damageonland
 }
 
 floor WATER boxwater

@@ -14,3 +14,11 @@ pulselight BIGBOOM
 	interval 0.15
 	dontlightself 1
 }
+
+glow
+{
+	flats
+	{
+		WATER
+	}
+}

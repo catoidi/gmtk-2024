@@ -29,6 +29,14 @@ Class Pipe : Actor
 		SpewLiquid();
 	}
 	
+	override void CollidedWith(Actor other, bool passive)
+	{
+		if ((other is "PlayerPawn") && (oldpostimer < 1))
+		{
+			A_Die();
+		}
+	}
+	
 	virtual void PipeTick()
 	{
 		if (Pos == oldpos) {++oldpostimer;}
@@ -90,6 +98,7 @@ Class Pipe : Actor
 		Death:
 			TNT1 A 1
 			{
+				A_NoBlocking();
 				A_SpawnItemEX("SafeBoom", 0, 0, 32, flags: SXF_NOCHECKPOSITION);
 				A_SpawnItemEX("Metal", 0, 0, 32, flags: SXF_NOCHECKPOSITION);
 			}
@@ -342,8 +351,6 @@ Class FuelDuct : TooltipActor
 		+SOLID;
 	}
 	
-	bool isconnected;
-	
 	string statustooltip;
 	
 	override void Tick()
@@ -351,6 +358,21 @@ Class FuelDuct : TooltipActor
 		Super.Tick();
 		
 		statustooltip = "$FUELDUCT_NOPIPE";
+		
+		FLineTraceData side1;
+		//front
+		LineTrace(angle, 64, pitch, 0, height / 2, 0, 0, side1);
+		if (side1.HitActor is "Pipe") 
+		{
+			let hitpipe = Pipe(side1.HitActor);
+			
+			if (hitpipe.liquid == 0) {statustooltip = "$FUELDUCT_EMPTY";}
+			else 
+			{	
+				CallACS("AddFuel");
+				statustooltip = "$FUELDUCT_EXTRACT";
+			}
+		}
 	}
 	
 	States

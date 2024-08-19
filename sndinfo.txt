@@ -24,6 +24,7 @@ whiff2 whiff2
 jumppad jumppad
 dipain dipain
 dipain2 dipain2
+quest quest
 
 //Player
 player/playdie playdie

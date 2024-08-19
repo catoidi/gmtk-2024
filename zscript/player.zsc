@@ -21,12 +21,14 @@ class MyStandaloneGamePlayer : PlayerPawn
 		Player.StartItem "OxygenTaker";
 	}
 	
+	int healtimer;
 	int oxygentimer;
 	bool jumped;
 	bool dashed;
 	int dashhold;
 	bool doublejumped;
 	int jumphold;
+	int fuellevel;
 	
 	virtual void DoDash()
 	{
@@ -55,6 +57,15 @@ class MyStandaloneGamePlayer : PlayerPawn
 		super.tick();
 		if (isFrozen() == false)
 		{
+			fuellevel = CallACS("CheckFuel");
+		
+			++healtimer;
+			if (healtimer >= (120 - CountInv("Oxygen")))
+			{
+				GiveBody(1);
+				healtimer = 0;
+			}
+			
 			if (CountInv("OxygenTaker") > 0)
 			{
 				++oxygentimer;
@@ -63,18 +74,16 @@ class MyStandaloneGamePlayer : PlayerPawn
 					if (CountInv("OxygenGiver") == 0)
 					{
 						if (CountInv("Oxygen") > 0)	{TakeInventory("Oxygen", 1);}
-						else {DamageMobj(self, self, 3, 'Normal');}
-					}
-					else
-					{
-						GiveBody(5);
+						else {DamageMobj(self, self, 10, 'Normal');}
 					}
 					oxygentimer = 0;
 				}
 			}
 			
+			bool onground = ((Pos.Z ~== FloorZ) || (bOnMobj));
+			
 			if (dashhold > 0) {--dashhold;}
-			if (Pos.Z ~== FloorZ)
+			if (onground)
 			{
 				jumped = false;
 				doublejumped = false;
@@ -98,7 +107,7 @@ class MyStandaloneGamePlayer : PlayerPawn
 				jumped = true;
 				++jumphold;
 			}
-			else if ((Pos.Z > FloorZ) && (!jumped)) {jumped = true;}
+			else if ((!onground) && (!jumped)) {jumped = true;}
 			else {jumphold = 0;}
 		}
 	}

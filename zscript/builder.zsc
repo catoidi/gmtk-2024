@@ -31,6 +31,11 @@ Class PipeBuilder : Weapon
 				else if ((newpos.Z - (bdata.HitActor.Pos.Z + 32)) >= 32) {chosenface = 4;}
 				else if ((newpos.Z - (bdata.HitActor.Pos.Z + 32)) <= -32) {chosenface = 5;}
 				
+				if ((chosenface < 4) && (newpos.Z > (bdata.HitActor.Z + 32)))
+				{
+					newpos.Z -= 64;
+				}
+				
 				switch (chosenface)
 				{
 					case 0: newpos += (64, 0, 0); break;
@@ -182,14 +187,6 @@ Class BuilderTrace : Actor
 			if (extraY > 32) {extraY -= 64;}
 			double extraZ = (truepos.Z + 8) % 64;
 			if (extraZ > 32) {extraZ -= 64;}
-			FLineTraceData collide;
-			
-			//collision check
-			LineTrace(0, 8, 0, 0, 32, 0, 0, collide);
-			if (collide.HitActor is "Pipe")
-			{
-				SetOrigin((truepos.X, truepos.Y, truepos.Z + 64), false);
-			}
 			SetOrigin((truepos.X - extraX, truepos.Y - extraY, truepos.Z - extraZ), false);
 			
 			//console.printf("%d, %d, %d", Pos.X, Pos.Y, Pos.Z);

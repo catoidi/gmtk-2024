@@ -13,10 +13,11 @@ TXT_MAP01 = "Exoplanetary Pitstop";
 TXT_HUD_HEALTH = "Health: ";
 TXT_HUD_OXYGEN = "Oxygen: ";
 TXT_HUD_METAL = "Metals: ";
+TXT_HUD_FUEL = "Fuel: ";
 
 FUELDUCT = "\n\nConnect a pipe filled with liquid\nto this duct to refuel your ship.";
 FUELDUCT_EXTRACT = "\n\n\cf[STATUS:] \cdEXTRACTING FUEL...";
-FUELDUCT_EMPTY = "\n\n\cf[STATUS:] \ckCONNECTED. OUT OF FUEL.";
+FUELDUCT_EMPTY = "\n\n\cf[STATUS:] \ckCONNECTED. PIPE IS EMPTY.";
 FUELDUCT_NOPIPE = "\n\n\cf[STATUS:] \caNO PIPE CONNECTED";
 
 PIPE_EMPTY = "\ca[EMPTY]";
@@ -33,3 +34,8 @@ TOOLTIP_EXIT = "\n\n\ccOnce your ship is refueled,\npress this button to leave t
 SIGN1 = "\n\nYour objective is to gather metals,\nlocate the fuel source,\nthen build a pipe system that\nconnects it to your ship's fuel ducts.";
 SIGN2 = "\n\nYou have limited oxygen outside the ship.\nRevisit the ship to regain oxygen.\nIf you run out, you will slowly perish.";
 SIGN3 = "\n\nYou have access to an air dash and double jump.\n\ccWhile in the air, press \cf'Shift' \cc to dash.\n\n\caDouble Jumps and Air Dashes cost oxygen to use.";
+
+EXIT_NOFUEL = "\caYou need more fuel before you can leave!";
+EXIT_DOORS = "\caClose the doors first!";
+EXIT_WIN = "\cfYou win!";
+FUEL_MAX = "\cdYour ship is now ready to depart! :)";

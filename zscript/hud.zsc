@@ -30,8 +30,9 @@ class MyStandaloneGameHUD : BaseStatusBar
 
 	void DrawHealth(void)
 	{
-		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_HEALTH") .. FormatNumber(pmo.player.health, 3), (-104, -36), DI_SCREEN_RIGHT_BOTTOM);
-		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_OXYGEN") .. FormatNumber(pmo.CountInv("Oxygen")), (-104, -28), DI_SCREEN_RIGHT_BOTTOM);
-		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_METAL") .. FormatNumber(pmo.CountInv("Metal")), (-104, -20), DI_SCREEN_RIGHT_BOTTOM);
+		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_HEALTH") .. FormatNumber(pmo.player.health, 3), (-104, -44), DI_SCREEN_RIGHT_BOTTOM);
+		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_OXYGEN") .. FormatNumber(pmo.CountInv("Oxygen")), (-104, -36), DI_SCREEN_RIGHT_BOTTOM);
+		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_METAL") .. FormatNumber(pmo.CountInv("Metal")), (-104, -28), DI_SCREEN_RIGHT_BOTTOM);
+		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_FUEL") .. FormatNumber(pmo.fuellevel / 3.5), (-104, -20), DI_SCREEN_RIGHT_BOTTOM);
 	}
 }

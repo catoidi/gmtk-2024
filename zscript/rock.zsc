@@ -1,0 +1,53 @@
+//zscript/rock.zsc
+
+Class TallSpike : Actor
+{
+	Default
+	{
+		Radius 32;
+		Height 128;
+		+SOLID;
+	}
+	
+	States
+	{
+		Spawn:
+			ROCK A -1;
+			Stop;
+	}
+}
+
+Class ShortSpike : Actor
+{
+	Default
+	{
+		Radius 24;
+		Height 64;
+		+SOLID;
+	}
+	
+	States
+	{
+		Spawn:
+			ROCK B -1;
+			Stop;
+	}
+}
+
+Class RockPile : Actor
+{
+	Default
+	{
+		Radius 20;
+		Height 20;
+		-SOLID;
+		+NOBLOCKMAP;
+	}
+	
+	States
+	{
+		Spawn:
+			ROCK C -1;
+			Stop;
+	}
+}
