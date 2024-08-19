@@ -17,6 +17,7 @@ GameInfo
 	DimAmount = 0.8
 	PlayerClasses = "MyStandaloneGamePlayer"
 	StatusbarClass = "MyStandaloneGameHUD"
+	AddEventHandlers = "NashHPBarHandler"
 }
 
 GameDefaults
@@ -63,4 +64,9 @@ DoomEdNums
 	23000 = Ore
 	23001 = FuelSmoke
 	23002 = FuelDuct
+	23003 = TooltipActor
+	23004 = LookAtMe
+	23005 = PipePump
+	23006 = PipeBend
+	23007 = Pipe
 }

@@ -14,3 +14,18 @@ TXT_HUD_HEALTH = "Health: ";
 TXT_HUD_OXYGEN = "Oxygen: ";
 TXT_HUD_METAL = "Metals: ";
 
+FUELDUCT = "\n\nConnect a pipe filled with liquid\nto this duct to refuel your ship.";
+FUELDUCT_EXTRACT = "\n\n\cf[STATUS:] \cdEXTRACTING FUEL...";
+FUELDUCT_EMPTY = "\n\n\cf[STATUS:] \ckCONNECTED. OUT OF FUEL.";
+FUELDUCT_NOPIPE = "\n\n\cf[STATUS:] \caNO PIPE CONNECTED";
+
+PIPE_EMPTY = "\ca[EMPTY]";
+PIPE_FULL = "\cd[FUEL DETECTED]";
+PIPE_HORIZONTAL = "Pipe (Horizontal)";
+PIPE_BEND_7 = "Pipe (7-shaped)";
+PIPE_BEND_L = "Pipe (L-shaped)";
+PIPE_BEND_HORIZONTAL = "Pipe (Elbow-shaped)";
+PIPE_PUMP = "Pipe (Vertical Pump)";
+
+TOOLTIP_OPENDOOR = "\n\n\ccPress \cf'E' \ccon this button to open/close the doors.\n\n\cdYou will regain oxygen while the doors are closed.";
+TOOLTIP_EXIT = "\n\n\ccOnce your ship is refueled,\npress this button to leave the planet.\n\n\caThis will end the game.";

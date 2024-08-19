@@ -8,3 +8,9 @@ version "4.12"
 #include "zscript/pipe.zsc"
 #include "zscript/builder.zsc"
 #include "zscript/boom.zsc"
+#include "zscript/tooltip.zsc"
+
+//nashhpbar
+#include "zscript/NashHPBar/NashHPBarOptionMenu/NashHPBarOptionMenu.zsc"
+#include "zscript/NashHPBar/NashHPBarPlugin/NashHPBarPlugin.zsc"
+#include "zscript/NashHPBar/NashHPBarHandler/NashHPBarHandler.zsc"

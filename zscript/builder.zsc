@@ -98,7 +98,7 @@ Class PipeBuilder : Weapon
 			{
 				if (invoker.pipemode < 4) {++invoker.pipemode;}
 				else {invoker.pipemode = 0;}
-				//console.printf("Pipe Type: %d", invoker.pipemode);
+				console.printf("Pipe Type: %d", invoker.pipemode);
 			}
 			Goto Ready;
 		Reload:
@@ -192,7 +192,7 @@ Class BuilderTrace : Actor
 			}
 			SetOrigin((truepos.X - extraX, truepos.Y - extraY, truepos.Z - extraZ), false);
 			
-			console.printf("%d, %d, %d", Pos.X, Pos.Y, Pos.Z);
+			//console.printf("%d, %d, %d", Pos.X, Pos.Y, Pos.Z);
 		}
 	}
 	

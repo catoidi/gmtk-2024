@@ -1,0 +1,31 @@
+//zscript/tooltip.zsc
+Class TooltipActor : Actor
+{
+	string user_tooltip; //the text that gets displayed in the HPBar UI. accepts LANGUAGE lumps.
+
+	Default
+	{
+		Radius 20;
+		Height 96;
+		-SOLID;
+	}
+}
+
+Class LookAtMe : Actor
+{
+	Default
+	{
+		-SOLID;
+		+NOGRAVITY;
+		+NOBLOCKMAP;
+		+BRIGHT;
+		+FLOATBOB;
+	}
+	
+	States
+	{
+		Spawn:
+			LOOK A -1;
+			Stop;
+	}
+}

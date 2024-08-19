@@ -1,1 +1,6 @@
 WARP2 texture WATER
+
+
+//button mashing
+switch BUTTON1 on sound Switch1 pic BUTTON2 tics 0
+switch BUTTON2 off sound Switch2 pic BUTTON1 tics 0

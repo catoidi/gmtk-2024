@@ -6,6 +6,7 @@ Class Pipe : Actor
 	
 	Default
 	{
+		Tag "$PIPE_HORIZONTAL";
 		Health 4;
 		Radius 32;
 		Height 64;
@@ -98,6 +99,11 @@ Class Pipe : Actor
 
 Class PipePump : Pipe
 {
+	Default
+	{
+		Tag "$PIPE_PUMP";
+	}
+
 	override void PipeTick()
 	{
 		if (Pos == oldpos) {++oldpostimer;}
@@ -148,6 +154,11 @@ Class PipePump : Pipe
 
 Class PipeBend : Pipe
 {
+	Default
+	{
+		Tag "$PIPE_BEND_7";
+	}
+	
 	//Vertical Bend (L-shape)
 	override void PipeTick()
 	{
@@ -200,6 +211,11 @@ Class PipeBend : Pipe
 
 Class PipeBendHorizontal : Pipe
 {
+	Default
+	{
+		Tag "$PIPE_BEND_HORIZONTAL";
+	}
+
 	override void Tick()
 	{
 		if (Pos == oldpos) {++oldpostimer;}
@@ -246,6 +262,11 @@ Class PipeBendHorizontal : Pipe
 
 Class PipeBendTop : Pipe
 {
+	Default
+	{
+		Tag "$PIPE_BEND_L";
+	}
+
 	//Vertical Bend (R-shape)
 	override void PipeTick()
 	{
@@ -311,7 +332,7 @@ Class PipeLiquid : Actor
 	}
 }
 
-Class FuelDuct : Actor
+Class FuelDuct : TooltipActor
 {
 	Default
 	{
@@ -322,6 +343,15 @@ Class FuelDuct : Actor
 	}
 	
 	bool isconnected;
+	
+	string statustooltip;
+	
+	override void Tick()
+	{
+		Super.Tick();
+		
+		statustooltip = "$FUELDUCT_NOPIPE";
+	}
 	
 	States
 	{

@@ -1,0 +1,4 @@
+//cvarinfo.txt
+
+//nashhpbar
+user bool nashhpbar_enable = true;
