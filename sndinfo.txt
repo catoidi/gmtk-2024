@@ -19,6 +19,11 @@ $volume key02 0.1
 $volume key03 0.1
 
 boxboom boxboom
+piebomb piebomb
+whiff2 whiff2
+jumppad jumppad
+dipain dipain
+dipain2 dipain2
 
 //Player
 player/playdie playdie

@@ -68,4 +68,5 @@ DoomEdNums
 	23005 = PipePump
 	23006 = PipeBend
 	23007 = Pipe
+	23008 = Sign
 }

@@ -19,10 +19,15 @@ Class OxygenGiver : Inventory
 	override void DoEffect()
 	{
 		++timer;
-		if (owner && (timer >= 7))
+		if (owner && (timer >= 3))
 		{
 			owner.GiveInventory("Oxygen", 1);
 			timer = 0;
 		}
 	}
+}
+
+Class OxygenTaker : Inventory
+{
+	Default {Inventory.MaxAmount 1;}
 }

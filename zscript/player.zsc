@@ -17,26 +17,89 @@ class MyStandaloneGamePlayer : PlayerPawn
 		Player.StartItem "OreDrill";
 		Player.StartItem "PipeBuilder";
 		Player.StartItem "Oxygen", 100;
+		Player.StartItem "OxygenGiver";
+		Player.StartItem "OxygenTaker";
 	}
 	
 	int oxygentimer;
+	bool jumped;
+	bool dashed;
+	int dashhold;
+	bool doublejumped;
+	int jumphold;
+	
+	virtual void DoDash()
+	{
+		if (jumped && !dashed && (dashhold == 0))
+		{
+			dashed = true;
+			A_Recoil(-15);
+			TakeInventory("Oxygen", 1);
+			A_StartSound("whiff2", CHAN_AUTO);
+		}
+	}
+	
+	virtual void DoDoubleJump()
+	{
+		if (jumped && !doublejumped)
+		{
+			doublejumped = true;
+			Vel.Z = jumpz;
+			TakeInventory("Oxygen", 1);
+			A_StartSound("jumppad", CHAN_AUTO);
+		}
+	}
 	
 	override void tick()
 	{
 		super.tick();
 		if (isFrozen() == false)
 		{
-			if (CountInv("OxygenGiver") == 0)
+			if (CountInv("OxygenTaker") > 0)
 			{
 				++oxygentimer;
 				if (oxygentimer >= 70)
 				{
-					TakeInventory("Oxygen", 1);
+					if (CountInv("OxygenGiver") == 0)
+					{
+						if (CountInv("Oxygen") > 0)	{TakeInventory("Oxygen", 1);}
+						else {DamageMobj(self, self, 3, 'Normal');}
+					}
+					else
+					{
+						GiveBody(5);
+					}
 					oxygentimer = 0;
 				}
 			}
 			
+			if (dashhold > 0) {--dashhold;}
+			if (Pos.Z ~== FloorZ)
+			{
+				jumped = false;
+				doublejumped = false;
+				dashed = false;
+			}
 			
+			if (jumped)
+			{
+				if (Player.Buttons & BT_SPEED)
+				{
+					DoDash();
+				}
+				else if ((Player.Buttons & BT_JUMP) && (jumphold < 1))
+				{
+					DoDoubleJump();
+				}
+			}
+			
+			if (Player.Buttons & BT_JUMP) 
+			{
+				jumped = true;
+				++jumphold;
+			}
+			else if ((Pos.Z > FloorZ) && (!jumped)) {jumped = true;}
+			else {jumphold = 0;}
 		}
 	}
 

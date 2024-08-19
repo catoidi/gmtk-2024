@@ -11,6 +11,23 @@ Class TooltipActor : Actor
 	}
 }
 
+Class Sign : TooltipActor
+{
+	Default
+	{
+		Radius 32;
+		Height 64;
+		+SOLID;
+	}
+	
+	States
+	{
+		Spawn:
+			SIGN A -1;
+			Stop;
+	}
+}
+
 Class LookAtMe : Actor
 {
 	Default

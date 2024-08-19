@@ -50,6 +50,7 @@ Class Drill_Puff : Actor
 	{
 		Spawn:
 			PUFF BBB 0 NoDelay A_SpawnParticle("f8e63d", SPF_FULLBRIGHT | SPF_RELVEL, 24, 2, random(0, 359), 0, 0, 0, random(0, 4), 0, random(0, 4), 0, 0, -0.33);
+			PUFF B 0 A_StartSound("dipain2");
 			PUFF B 2 A_AttachLightDef("spark", "BULLETSPARK");
 			PUFF B 2 A_RemoveLight("spark");
 			Goto Looper+1;

@@ -87,7 +87,7 @@ Class PipeBuilder : Weapon
 				{
 					bool placed = false;
 					actor thing;
-					[placed, thing] = invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: invoker.trace.angle, flags: SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION);
+					[placed, thing] = invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: invoker.trace.angle, flags: SXF_ABSOLUTEANGLE);
 					if (thing) {A_TakeInventory("Metal", 1);}
 				}
 				return FindState(null);
