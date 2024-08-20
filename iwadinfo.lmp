@@ -6,6 +6,6 @@ IWAD
 	Game = "Hexen"
 	Config = "ExoplanetaryPitstop"
 	IWADName = "exoplanetary-pitstop.ipk3"
-	Load = "explanet-music.pk3"
+	Load = "exoplanet-music.pk3"
 	Mapinfo = "mapinfo/mindefaults.txt"
 }
