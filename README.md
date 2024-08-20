@@ -1,4 +1,4 @@
-# Exoplanetary Pitstop
+![Cover image for Exoplanetary Pitstop. Shows the name of the game on top of a blurred purple/pink/gray background.](https://github.com/catoidi/gmtk-2024/blob/main/startup.png)
 
 This is a short little game about fueling up your spaceship on a distant planet.
 
