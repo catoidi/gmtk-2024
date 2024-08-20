@@ -28,6 +28,26 @@ Class Sign : TooltipActor
 	}
 }
 
+Class Sign2 : Sign
+{
+	States
+	{
+		Spawn:
+			SIGN B -1;
+			Stop;
+	}
+}
+
+Class Sign3 : Sign
+{
+	States
+	{
+		Spawn:
+			SIGN C -1;
+			Stop;
+	}
+}
+
 Class LookAtMe : Actor
 {
 	Default

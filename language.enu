@@ -34,6 +34,8 @@ TOOLTIP_EXIT = "\n\n\ccOnce your ship is refueled,\npress this button to leave t
 SIGN1 = "\n\nYour objective is to gather metals,\nlocate the fuel source,\nthen build a pipe system that\nconnects it to your ship's fuel ducts.";
 SIGN2 = "\n\nYou have limited oxygen outside the ship.\nRevisit the ship to regain oxygen.\nIf you run out, you will slowly perish.";
 SIGN3 = "\n\nYou have access to an air dash and double jump.\n\ccWhile in the air, press \cf'Shift' \cc to dash.\n\n\caDouble Jumps and Air Dashes cost oxygen to use.";
+SIGN_DRILL = "\nPress \cf'1' \ccto select the \cfOre Drill\cc.\n\n\ci* Controls: *\n\cf'Left Mouse' \cc= Activate drill\n\n\cvUse this drill to collect metals.";
+SIGN_IPAD = "\nPress \cf'2' \ccto select the \cfPipe Builder\cc.\n\n\ci* Controls: *\n\cf'Left Mouse' \cc= Place pipe \ca(Costs 1 metal)\n\cf'Right Mouse' \cc= Change pipe type\n\cf'R' \cc= Rotate pipe clockwise";
 
 EXIT_NOFUEL = "\caYou need more fuel before you can leave!";
 EXIT_DOORS = "\caClose the doors first!";

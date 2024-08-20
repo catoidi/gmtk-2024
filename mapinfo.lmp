@@ -72,4 +72,6 @@ DoomEdNums
 	23009 = TallSpike
 	23010 = ShortSpike
 	23011 = RockPile
+	23012 = Sign2
+	23013 = Sign3
 }
