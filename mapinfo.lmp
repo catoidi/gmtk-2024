@@ -71,9 +71,9 @@ DoomEdNums
 	23006 = PipeBend
 	23007 = Pipe
 	23008 = Sign
-	23009 = TallSpike
-	23010 = ShortSpike
-	23011 = RockPile
+	23009 = TallSpaceSpike
+	23010 = ShortSpaceSpike
+	23011 = SpaceRocks
 	23012 = Sign2
 	23013 = Sign3
 }

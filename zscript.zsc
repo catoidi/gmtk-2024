@@ -1,0 +1,19 @@
+version "4.12"
+
+#include "zscript_exoplanet/player.zsc"
+#include "zscript_exoplanet/hud.zsc"
+#include "zscript_exoplanet/ore.zsc"
+#include "zscript_exoplanet/smoke.zsc"
+#include "zscript_exoplanet/drill.zsc"
+#include "zscript_exoplanet/pipe.zsc"
+#include "zscript_exoplanet/builder.zsc"
+#include "zscript_exoplanet/boom.zsc"
+#include "zscript_exoplanet/tooltip.zsc"
+#include "zscript_exoplanet/handler.zsc"
+#include "zscript_exoplanet/oxygen.zsc"
+#include "zscript_exoplanet/spacerock.zsc"
+
+//nashhpbar
+#include "zscript_exoplanet/NashHPBar/NashHPBarOptionMenu/NashHPBarOptionMenu.zsc"
+#include "zscript_exoplanet/NashHPBar/NashHPBarPlugin/NashHPBarPlugin.zsc"
+#include "zscript_exoplanet/NashHPBar/NashHPBarHandler/NashHPBarHandler.zsc"

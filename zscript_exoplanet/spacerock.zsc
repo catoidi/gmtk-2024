@@ -1,6 +1,6 @@
 //zscript/rock.zsc
 
-Class TallSpike : Actor
+Class TallSpaceSpike : Actor
 {
 	Default
 	{
@@ -17,7 +17,7 @@ Class TallSpike : Actor
 	}
 }
 
-Class ShortSpike : Actor
+Class ShortSpaceSpike : Actor
 {
 	Default
 	{
@@ -34,7 +34,7 @@ Class ShortSpike : Actor
 	}
 }
 
-Class RockPile : Actor
+Class SpaceRocks : Actor
 {
 	Default
 	{
