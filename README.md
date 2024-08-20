@@ -14,10 +14,12 @@ requires VKDoom, preferably one released during/after August 2024.
 this can run using GZDoom, but isn't 100% compatible until it supports static lightmaps.
 
 credits:
-- shoutout to everyone who contributed to GZDoom/VKDoom. 
-- Nash Muhandes: Creator of 'Standalone Base Template' and 'NashHPBar', both of which this repo utilizes
+- pipe rotating/placing sounds by aiden seger (forever home)
+- this repo utilizes both 'Standalone Base Template' and 'NashHPBar', created by Nash Muhandes
 - the 'retro' sound effects were created using SFXR
+- also shoutout to everyone who contributed to GZDoom/VKDoom. 
 
 this repo also uses code and assets from:
 - Box Party Demo. First game I made in GZDoom.
 - DI: Debt is Inevitable. Another game I'm working on.
+

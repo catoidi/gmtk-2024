@@ -112,7 +112,15 @@ Class PipeBuilder : Weapon
 					bool placed = false;
 					actor thing;
 					[placed, thing] = invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: invoker.trace.angle, flags: SXF_ABSOLUTEANGLE);
-					if (thing) {A_TakeInventory("Metal", 1);}
+					if (thing) 
+					{
+						A_StartSound("thunk", 0, pitch: frandom(0.8, 1.2));
+						A_TakeInventory("Metal", 1);
+						for (int i = 0; i < 16; ++i)
+						{
+							thing.A_SpawnParticleEX("White", TexMan.CheckForTexture("SMOKB0"), STYLE_NONE, SPF_ROLL, 35, random(8, 16), 0, random(-40, 40), random(-40, 40), random(-8, 72), 0, 0, 0, 0, 0, -0.33, 1, -1, 0, random(0, 359));
+						}
+					}
 				}
 				return invoker.FindState(null);
 			}
@@ -130,6 +138,7 @@ Class PipeBuilder : Weapon
 			#### # 0 
 			{
 				++invoker.pipeangle;
+				A_StartSound("scrape", 1);
 				console.printf("Pipe Direction: %d", invoker.pipeangle % 4);
 			}
 			#### ######### 1 PipeTrace();

@@ -1,5 +1,9 @@
 //sndinfo.txt
 
+key01 key01
+key02 key02
+key03 key03
+
 //Menu
 switches/normbutn		key01
 switches/exitbutn		key01
@@ -25,6 +29,14 @@ jumppad jumppad
 dipain dipain
 dipain2 dipain2
 quest quest
+drill drill
+drill2 drill2
+
+//forever home sounds
+scrape1 scrape1
+scrape2 scrape2
+$random scrape {scrape1 scrape2}
+thunk thunk
 
 //Player
 player/playdie playdie

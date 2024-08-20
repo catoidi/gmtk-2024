@@ -48,7 +48,7 @@ class MyStandaloneGamePlayer : PlayerPawn
 			doublejumped = true;
 			Vel.Z = jumpz;
 			TakeInventory("Oxygen", 1);
-			A_StartSound("jumppad", CHAN_AUTO);
+			A_StartSound("jumppad", CHAN_AUTO, pitch: 1.2);
 		}
 	}
 	
@@ -111,6 +111,10 @@ class MyStandaloneGamePlayer : PlayerPawn
 			
 			if (Player.Buttons & BT_JUMP) 
 			{
+				if (!jumped)
+				{
+					A_StartSound("jumppad", CHAN_BODY, CHANF_NOSTOP);
+				}
 				jumped = true;
 				++jumphold;
 			}
