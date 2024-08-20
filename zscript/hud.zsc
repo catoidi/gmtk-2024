@@ -44,7 +44,12 @@ class MyStandaloneGameHUD : BaseStatusBar
 		
 		int fuelcolor = Font.CR_UNTRANSLATED;
 		if (pmo.fuellevel > 0) {fuelcolor = Font.CR_GOLD;}
-		if (pmo.fuellevel >= 350) {fuelcolor = Font.CR_GREEN;}
+		if (pmo.fuellevel >= 350) 
+		{
+			fuelcolor = Font.CR_GREEN;
+			DrawString(mHUDFont, StringTable.Localize("$FUEL_MAX"), (-20, -12), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_RIGHT, fuelcolor, 0.5, scale: (0.5, 0.5));
+		}
 		DrawString(mHUDFont, StringTable.Localize("$TXT_HUD_FUEL") .. FormatNumber(pmo.fuellevel / 3.5), (-20, -20), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_RIGHT, fuelcolor);
+		
 	}
 }
