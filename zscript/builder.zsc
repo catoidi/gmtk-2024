@@ -61,33 +61,52 @@ Class PipeBuilder : Weapon
 			}
 		}
 	}
+	
+	//definitely a better way to do this but im under a time constraint here so cut me some slack
+	action state DrawUIOverlay()
+	{
+		let returnvalue = string.format("UIOverlay%d", invoker.pipemode + 1);
+		return invoker.FindStateByString(returnvalue);
+	}
+	action state DrawTextOverlay()
+	{
+		let returnvalue = string.format("TextOverlay%d", (invoker.pipeangle % 4) + 1);
+		return invoker.FindStateByString(returnvalue);
+	}
 
 	States
 	{	
 		Select:
-			CHES A 1 A_Raise;
+			IPAD A 1 A_Raise;
 			Loop;
 		Deselect:
 			#### # 0
 			{
+				A_Overlay(2, "null");
+				A_Overlay(3, "null");
 				if (invoker.trace)
 				{
 					invoker.trace.bINVISIBLE = true;;
 				}
 			}
-			CHES A 1 A_Lower;
+			IPAD K 1 A_Lower;
 			Loop;
 		Ready:
-			CHES A 1 
+			IPAD A 0 A_Overlay(2, "UIOverlay", true);
+			IPAD A 0 A_Overlay(3, "TextOverlay", true);
+			IPAD A 1 
 			{
+				//A_Overlay(-2, "TextOverlay", true);
+				//frame = invoker.pipemode + 1;
+				//console.printf("%d", frame);
 				A_WeaponReady(WRF_ALLOWRELOAD);
 				PipeTrace();
 			}
-			Loop;
+			Wait;
 		Fire:
 			#### # 1 
 			{
-				if (CountInv("Metal") == 0) {return FindState("NoAmmo");}
+				if (CountInv("Metal") == 0) {return invoker.FindState("NoAmmo");}
 				if (invoker.trace)
 				{
 					bool placed = false;
@@ -95,7 +114,7 @@ Class PipeBuilder : Weapon
 					[placed, thing] = invoker.trace.A_SpawnItemEX(invoker.trace.pipespawner, -1, angle: invoker.trace.angle, flags: SXF_ABSOLUTEANGLE);
 					if (thing) {A_TakeInventory("Metal", 1);}
 				}
-				return FindState(null);
+				return invoker.FindState(null);
 			}
 			Goto Ready;
 		AltFire:
@@ -103,6 +122,7 @@ Class PipeBuilder : Weapon
 			{
 				if (invoker.pipemode < 4) {++invoker.pipemode;}
 				else {invoker.pipemode = 0;}
+				//frame = invoker.pipemode + 1;
 				console.printf("Pipe Type: %d", invoker.pipemode);
 			}
 			Goto Ready;
@@ -110,7 +130,7 @@ Class PipeBuilder : Weapon
 			#### # 0 
 			{
 				++invoker.pipeangle;
-				console.printf("Pipe Direction: %d", invoker.pipeangle);
+				console.printf("Pipe Direction: %d", invoker.pipeangle % 4);
 			}
 			#### ######### 1 PipeTrace();
 			Goto Ready;
@@ -120,6 +140,49 @@ Class PipeBuilder : Weapon
 			#### # 4;
 			#### # 0 A_Jump(256, "Ready");
 			Goto Ready;
+		//warning: this code sucks
+		UIOverlay:
+			TNT1 A 1 DrawUIOverlay();
+			Wait;
+		UIOverlay1:
+			IPAD B 1;
+			#### # 0 DrawUIOverlay();
+			Loop;
+		UIOverlay2:
+			IPAD C 1;
+			#### # 0 DrawUIOverlay();
+			Loop;
+		UIOverlay3:
+			IPAD D 1;
+			#### # 0 DrawUIOverlay();
+			Loop;
+		UIOverlay4:
+			IPAD E 1;
+			#### # 0 DrawUIOverlay();
+			Loop;
+		UIOverlay5:
+			IPAD F 1;
+			#### # 0 DrawUIOverlay();
+			Loop;
+		TextOverlay:
+			TNT1 A 1 DrawTextOverlay();
+			Wait;
+		TextOverlay1:
+			IPAD G 1;
+			#### # 0 DrawTextOverlay();
+			Loop;
+		TextOverlay2:
+			IPAD H 1;
+			#### # 0 DrawTextOverlay();
+			Loop;
+		TextOverlay3:
+			IPAD I 1;
+			#### # 0 DrawTextOverlay();
+			Loop;
+		TextOverlay4:
+			IPAD J 1;
+			#### # 0 DrawTextOverlay();
+			Loop;
 	}
 }
 
