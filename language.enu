@@ -39,3 +39,8 @@ EXIT_NOFUEL = "\caYou need more fuel before you can leave!";
 EXIT_DOORS = "\caClose the doors first!";
 EXIT_WIN = "\cfYou win!";
 FUEL_MAX = "\cdYour ship is now ready to depart! :)";
+
+ENDSCREEN_1 = "\ccAnd with that, your journey continues...";
+ENDSCREEN_2 = "\ccWill this be enough to reach your destination?";
+ENDSCREEN_3 = "\ccOnly time will tell...";
+ENDSCREEN_4 = "\n\cfTHANKS FOR PLAYING";

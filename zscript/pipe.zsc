@@ -85,7 +85,7 @@ Class Pipe : Actor
 	{
 		bool openend = false;
 		if (!End1) {openend = true;}
-		if (!End2 && (liquid < 256)) {openend = true;}
+		if (!End2 && (liquid < 512)) {openend = true;}
 		if ((liquid > 0) && (openend))
 		{
 			A_SpawnParticleEX("White", TexMan.CheckForTexture("SMOKA0"), STYLE_None, SPF_FULLBRIGHT | SPF_ROLL, 35, 8, 0, random(-72, 72), random(-72, 72), random(-72, 72), 0, 0, 0, 0, 0, -0.33, 1, -1, -0.25, random(0, 359));
@@ -149,7 +149,7 @@ Class PipePump : Pipe
 		LineTrace(0, 64, pitch + 90, 0, height / 2, 0, 0, side2);
 		if (side2.HitTexture == TexMan.CheckForTexture("WATER"))
 		{
-			liquid = 256;
+			liquid = 512;
 		}
 		else if (side2.HitActor is "Pipe")
 		{
@@ -205,7 +205,7 @@ Class PipeBend : Pipe
 		LineTrace(0, 64, pitch + 90, 0, height / 2, 0, 0, side2);
 		if (side2.HitTexture == TexMan.CheckForTexture("WATER"))
 		{
-			liquid = 256;
+			liquid = 512;
 		}
 		else if (side2.HitActor is "Pipe")
 		{

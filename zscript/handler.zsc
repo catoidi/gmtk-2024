@@ -2,6 +2,36 @@
 
 Class ExoplanetHandler : EventHandler
 {
+	ui virtual void DrawStars(string stars = "starback", float starsize = 0.5, float staralpha = 0.025)
+	{
+		//generate animated tiled background
+		TextureID back = TexMan.CheckForTexture(stars);
+		int backsize, backsizey;
+		[backsize, backsizey] = TexMan.GetSize(back);
+		backsize *= CleanXFac * starsize;
+		backsizey *= CleanYFac * starsize;
+		int backX = Screen.GetWidth() / backsize;
+		int backY = Screen.GetHeight() / backsizeY;
+		int curbackX;
+		int curbackY;
+		bool donebackground;
+		while (donebackground == false)
+		{
+			Screen.DrawTexture(back, true, curbackX * backsize, curbackY * backsizeY,
+				DTA_ScaleX, CleanXFac * starsize,
+				DTA_ScaleY, CleanYFac * starsize,
+				DTA_Alpha, staralpha
+			);
+			++curbackX;
+			if (curbackX > backX) 
+			{
+				++curbackY;
+				curbackX = 0;
+			}
+			if (curbackY > backY) {donebackground = true;}
+		}
+	}
+
 	override void NetworkProcess(ConsoleEvent e)
 	{
 		if (e.Name == 'DoDoorTeleport')
@@ -12,6 +42,122 @@ Class ExoplanetHandler : EventHandler
 			plr.SetOrigin((plr.Pos.X, plr.Pos.Y, plr.FloorZ), false);
 			plr.Teleport((plr.Pos.X + newX, plr.Pos.Y + newY, plr.Pos.Z), plr.angle, 0);
 			plr.A_StartSound("key01", CHAN_AUTO, attenuation: ATTN_NONE);
+		}
+	}
+	
+	ui int endtimer;
+	
+	override void UITick()
+	{
+		let plr = MyStandaloneGamePlayer(players[consoleplayer].mo);
+		if (plr.CountInv("Endscreen") > 0)
+		{
+			if (!Level.IsFrozen()) {++endtimer;}
+		}
+		else {endtimer = 0;}
+	}
+	
+	override void RenderOverlay(RenderEvent e)
+	{
+		if (endtimer > 0)
+		{
+			float endfade = 0.01 * endtimer;
+			if (endfade > 1.0) {endfade = 1.0;}
+			let startx = Screen.GetWidth() / 3;
+			let startx2 = startx * 2;
+			let blackscreen = TexMan.CheckForTexture("textures/BLACK.png");
+			Screen.DrawTexture(blackscreen, false,
+				0, 0,
+				DTA_DestWidth, Screen.GetWidth(),
+				DTA_DestHeight, Screen.GetHeight(),
+				DTA_Alpha, endfade
+			);
+			DrawStars(staralpha: 0.05 * endfade);
+		}
+		if (endtimer > 100)
+		{
+			float screenfade = 0.02 * (endtimer - 100);
+			if (screenfade > 1.0) {screenfade = 1.0;}
+			let endimage = TexMan.CheckForTexture("textures/endimage.png");
+			int endimage_X, endimage_Y;
+			[endimage_X, endimage_Y] = TexMan.GetSize(endimage);
+			vector2 endimage_size = (endimage_X, endimage_Y);
+			endimage_size.X *= CleanXFac;
+			endimage_size.Y *= CleanYFac;
+			let startx = (Screen.GetWidth() - endimage_size.X) / 2;
+			let starty = (Screen.GetHeight() - endimage_size.Y) / 2;
+			Screen.DrawTexture(endimage, false, startx, starty,
+				DTA_ScaleX, CleanXFac,
+				DTA_ScaleY, CleanYFac,
+				DTA_Alpha, screenfade
+			);
+		}
+		if (endtimer > 150)
+		{
+			float textfade = 0.02 * (endtimer - 150);
+			
+			let textback = TexMan.CheckForTexture("graphics/hpbar/SHOPBAR.png");
+			int textback_X, textback_Y;
+			[textback_X, textback_Y] = TexMan.GetSize(textback);
+			vector2 textback_size = (textback_X, textback_Y);
+			textback_size.X *= CleanXFac * 1.5;
+			textback_size.Y *= CleanYFac * 1.5;
+			let startx2 = (Screen.GetWidth() - textback_size.X) / 2;
+			let starty2 = ((Screen.GetHeight() / 3) * 2) - (bigfont.GetHeight() * CleanYFac * 3);
+			Screen.DrawTexture(textback, false, startx2, starty2,
+				DTA_ScaleX, CleanXFac * 1.5,
+				DTA_ScaleY, CleanYFac * 1.5,
+				DTA_Alpha, textfade
+			);
+			
+			string endtxt = "$ENDSCREEN_1";
+			endtxt = StringTable.Localize(endtxt);
+			let startx = (Screen.GetWidth() - (bigfont.StringWidth(endtxt) * CleanXFac)) / 2;
+			let starty = (Screen.GetHeight() / 3) * 2;
+			Screen.DrawText(bigfont, Font.CR_WHITE, startx, starty, endtxt,
+				DTA_ScaleX, CleanXFac,
+				DTA_ScaleY, CleanYFac,
+				DTA_Alpha, textfade
+			);
+		}
+		if (endtimer > 300)
+		{
+			float textfade = 0.02 * (endtimer - 300);
+			string endtxt = "$ENDSCREEN_2";
+			endtxt = StringTable.Localize(endtxt);
+			let startx = (Screen.GetWidth() - (bigfont.StringWidth(endtxt) * CleanXFac)) / 2;
+			let starty = ((Screen.GetHeight() / 3) * 2) + ((bigfont.GetHeight() * 1.25) * CleanYFac);
+			Screen.DrawText(bigfont, Font.CR_WHITE, startx, starty, endtxt,
+				DTA_ScaleX, CleanXFac,
+				DTA_ScaleY, CleanYFac,
+				DTA_Alpha, textfade
+			);
+		}
+		if (endtimer > 450)
+		{
+			float textfade = 0.02 * (endtimer - 450);
+			string endtxt = "$ENDSCREEN_3";
+			endtxt = StringTable.Localize(endtxt);
+			let startx = (Screen.GetWidth() - (bigfont.StringWidth(endtxt) * CleanXFac)) / 2;
+			let starty = ((Screen.GetHeight() / 3) * 2) + ((bigfont.GetHeight() * 2.5) * CleanYFac);
+			Screen.DrawText(bigfont, Font.CR_WHITE, startx, starty, endtxt,
+				DTA_ScaleX, CleanXFac,
+				DTA_ScaleY, CleanYFac,
+				DTA_Alpha, textfade
+			);
+		}
+		if (endtimer > 600)
+		{
+			float textfade = 0.01 * (endtimer - 600);
+			string endtxt = "$ENDSCREEN_4";
+			endtxt = StringTable.Localize(endtxt);
+			let startx = (Screen.GetWidth() - (bigfont.StringWidth(endtxt) * CleanXFac)) / 2;
+			let starty = ((Screen.GetHeight() / 3) * 2) + ((bigfont.GetHeight() * 3.75) * CleanYFac);
+			Screen.DrawText(bigfont, Font.CR_WHITE, startx, starty, endtxt,
+				DTA_ScaleX, CleanXFac,
+				DTA_ScaleY, CleanYFac,
+				DTA_Alpha, textfade
+			);
 		}
 	}
 }

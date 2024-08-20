@@ -165,3 +165,31 @@ class MyStandaloneGamePlayer : PlayerPawn
 		Stop;
 	}
 }
+
+Class Endscreen : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+	}
+	
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		let plr = PlayerPawn(owner);
+		if (plr)
+		{
+			if (!(plr.player.cheats & CF_TOTALLYFROZEN))	{plr.player.cheats |= CF_TOTALLYFROZEN;}
+		}
+	}
+	
+	override void DetachFromOwner()
+	{
+		Super.DoEffect();
+		let plr = PlayerPawn(owner);
+		if (plr)
+		{
+			if (plr.player.cheats & CF_TOTALLYFROZEN)	{plr.player.cheats &= ~CF_TOTALLYFROZEN;}
+		}
+	}
+}
