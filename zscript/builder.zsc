@@ -128,6 +128,7 @@ Class PipeBuilder : Weapon
 		AltFire:
 			#### # 1 
 			{
+				A_StartSound("key01");
 				if (invoker.pipemode < 4) {++invoker.pipemode;}
 				else {invoker.pipemode = 0;}
 				//frame = invoker.pipemode + 1;

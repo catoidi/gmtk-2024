@@ -45,4 +45,11 @@ FUEL_MAX = "\cdYour ship is now ready to depart! :)";
 ENDSCREEN_1 = "\ccAnd with that, your journey continues...";
 ENDSCREEN_2 = "\ccWill this be enough to reach your destination?";
 ENDSCREEN_3 = "\ccOnly time will tell...";
-ENDSCREEN_4 = "\n\cfTHANKS FOR PLAYING";
+ENDSCREEN_4 = "\n\cfTHANKS FOR PLAYING! :)";
+
+NOWPLAYING = "\cv>> Now Playing:";
+UPNEXT = "\cv>> Up Next:";
+MINECLUB = "    international miners club";
+THINK = "    i still think about u a lot";
+PEACE = "    peace sign";
+FOREVERYEAH = "\cf    by: forever home";

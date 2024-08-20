@@ -51,11 +51,13 @@ Map "MAP01" "$TXT_MAP01"
 	Sky1 = "textures/sky1.png", 0.05
 	//OutsideFog = "e000b6"
 	OutsideFogDensity = 8
+	Music = "mineclub"
 }
 
 Map "TITLEMAP" "Title"
 {
 	Sky1 = "textures/sky1.png", 0.05
+	Music = "think"
 }
 
 DoomEdNums

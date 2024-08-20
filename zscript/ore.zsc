@@ -37,6 +37,7 @@ Class Metal : Ammo
 		Inventory.Amount 1;
 		Inventory.MaxAmount 10000;
 		Inventory.PickupMessage "You got metals!";
+		Inventory.PickupSound "dsitemup";
 		+Inventory.ALWAYSPICKUP;
 		+FLOATBOB;
 		+CASTSPRITESHADOW;

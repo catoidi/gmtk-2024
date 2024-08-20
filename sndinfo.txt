@@ -31,6 +31,10 @@ dipain2 dipain2
 quest quest
 drill drill
 drill2 drill2
+airhiss airhiss
+
+dsitemup dsitemup
+dswpnup dswpnup
 
 //forever home sounds
 scrape1 scrape1
