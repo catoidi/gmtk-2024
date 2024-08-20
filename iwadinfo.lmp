@@ -1,9 +1,9 @@
 IWAD
 {
 	Name = "Exoplanetary Pitstop"
-	BannerColors = "dea840", "003d59"
+	BannerColors = "000000", "000000"
 	Autoname = "ExoplanetaryPitstop"
-	Game = "Doom"
+	Game = "Hexen"
 	Config = "ExoplanetaryPitstop"
 	IWADName = "exoplanetary-pitstop.ipk3"
 	Mapinfo = "mapinfo/mindefaults.txt"

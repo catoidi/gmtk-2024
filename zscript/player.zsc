@@ -73,7 +73,14 @@ class MyStandaloneGamePlayer : PlayerPawn
 				{
 					if (CountInv("OxygenGiver") == 0)
 					{
-						if (CountInv("Oxygen") > 0)	{TakeInventory("Oxygen", 1);}
+						if (CountInv("Oxygen") > 0)	
+						{
+							TakeInventory("Oxygen", 1);
+							if (CountInv("Oxygen") <= 10)
+							{
+								A_StartSound("piebomb", CHAN_AUTO, volume: 0.2, pitch: 0.8);
+							}
+						}
 						else {DamageMobj(self, self, 10, 'Normal');}
 					}
 					oxygentimer = 0;
@@ -118,7 +125,7 @@ class MyStandaloneGamePlayer : PlayerPawn
 		PLAY A -1;
 		Loop;
 	See:
-		PLAY ABCD 4;
+		PLAY AABB 4;
 		Loop;
 	Missile:
 		PLAY A 12;
